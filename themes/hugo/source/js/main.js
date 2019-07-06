@@ -115,5 +115,13 @@ $(document).ready(function () {
         }
       });
     }
+
+    /**
+     * Show dim panel after clicking
+     * the floating button.
+     */
+
+     
+
   }
 });

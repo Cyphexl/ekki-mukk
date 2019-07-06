@@ -1,7 +1,10 @@
 $floating-button-size = 40px
 
+#toggle-dim-panel-icon
+  transition: all .2s
+
 .floating-button
-  z-index: 3
+  z-index: 4
   border-radius: 999em
   width: $floating-button-size
   height: $floating-button-size
@@ -14,6 +17,35 @@ $floating-button-size = 40px
   box-shadow: 0 10px 10px rgba(0,0,0,0.1)
   transform: translateY(90px)
   transition: all .2s
+  cursor: pointer
+
+.floating-button:hover
+  box-shadow: 0 15px 12px rgba(0,0,0,0.1)
+
+.post-dim-panel
+  position: fixed
+  z-index: 3
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: $color-dim-panel
+  color: $color-background
+  display: flex
+  justify-content: center
+  align-items: center
+  display: none
+  
+  .dim-inner
+    .dim-inner-button
+      display: block
+      text-decoration: underline
+      margin-bottom: 10px
+      transition: all .2s
+      cursor: pointer
+
+  .dim-inner-button:hover, .dim-inner-button:active
+    opacity: 0.1
 
 @media screen and (min-width: 500px)
   #footer-post-container

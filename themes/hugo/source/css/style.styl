@@ -229,7 +229,6 @@ figure
   line-height: 1
   letter-spacing: -10px
   font-weight: bold
-  color: $color-text
   @media (max-width: 1000px)
     font-size: 6em
     letter-spacing: -5px
@@ -242,9 +241,20 @@ figure
   line-height: 1
   letter-spacing: -5px
   font-weight: bold
-  color: $color-text
   @media (max-width: 1000px)
     font-size: 6em
+    letter-spacing: -4px
+  @media (max-width: 480px)
+    font-size: 3em
+    letter-spacing: -1px
+
+.hugo-h4
+  font-size: 5em
+  line-height: 1
+  letter-spacing: -4px
+  font-weight: bold
+  @media (max-width: 1000px)
+    font-size: 5em
     letter-spacing: -4px
   @media (max-width: 480px)
     font-size: 3em
@@ -255,13 +265,15 @@ figure
   line-height: 1
   letter-spacing: -4px
   font-weight: bold
-  color: $color-text
   @media (max-width: 1000px)
     font-size: 5em
     letter-spacing: -4px
-  @media (max-width: 480px)
+  @media (max-width: 600px)
     font-size: 3em
     letter-spacing: -1px
+  @media (max-width: 385px)
+    font-size: 2em
+    letter-spacing: -0.6px
 
 .hugo-inverta-selection
   color: $color-background

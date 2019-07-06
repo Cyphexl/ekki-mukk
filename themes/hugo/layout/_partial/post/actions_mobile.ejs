@@ -1,7 +1,51 @@
-<div id="footer-post-container">
-    <div class="floating-button inverta">
-      +
-    </div>
-  
+<div>
+  <div id="toggle-dim-panel" class="floating-button inverta" onclick="togglePanel()">
+    <div id="toggle-dim-panel-icon">+</div>
   </div>
-  
+</div>
+
+<div class="post-dim-panel">
+  <div class="dim-inner">
+    <div onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');closePanel();" class="dim-inner-button hugo-h5">Back
+      To Top</div>
+    <% if (page.prev) { %>
+    <a href="<%- url_for(page.prev.path) %>" class="dim-inner-button hugo-h5 unstyled">Previous Post</a>
+    <% } %>
+    <% if (page.next) { %>
+    <a href="<%- url_for(page.next.path) %>" class="dim-inner-button hugo-h5 unstyled">Next Post</a>
+    <% } %>
+    <div onclick="whyBother(this)" class="dim-inner-button hugo-h5">Share</div>
+    <a href="<%- url_for('/') %>" class="dim-inner-button hugo-h5 unstyled">Take Me Home
+  </div>
+</div>
+</div>
+
+<script>
+
+  var dimPanelVisible = false
+
+  function whyBother(el) {
+    $(el).css("pointer-events", "none").css("text-decoration", "none").css("opacity", "0")
+    setTimeout(function () {
+      $(el).text("Why Bother?")
+      $(el).css("opacity", "0.2")
+    }, 1000)
+  };
+
+  function closePanel() {
+    $('.post-dim-panel').fadeOut()
+    $('#toggle-dim-panel-icon').css("transform", "initial")
+    dimPanelVisible = false
+  };
+
+  function openPanel() {
+    $('.post-dim-panel').css("display", "flex").hide().fadeIn()
+    $('#toggle-dim-panel-icon').css("transform", "rotate(45deg)")
+    dimPanelVisible = true
+  }
+
+  function togglePanel() {
+    dimPanelVisible ? closePanel() : openPanel()
+  }
+
+</script>
