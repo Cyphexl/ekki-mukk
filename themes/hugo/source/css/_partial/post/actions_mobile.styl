@@ -1,6 +1,7 @@
 $floating-button-size = 40px
 
 .floating-button
+  z-index: 3
   border-radius: 999em
   width: $floating-button-size
   height: $floating-button-size
@@ -11,6 +12,8 @@ $floating-button-size = 40px
   right: 40px
   bottom: 40px
   box-shadow: 0 10px 10px rgba(0,0,0,0.1)
+  transform: translateY(90px)
+  transition: all .2s
 
 @media screen and (min-width: 500px)
   #footer-post-container

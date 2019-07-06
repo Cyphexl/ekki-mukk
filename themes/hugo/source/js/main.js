@@ -86,17 +86,18 @@ $(document).ready(function () {
      * Show mobile navigation menu after scrolling upwards,
      * hide it again after scrolling downwards.
      */
-    if ($("#footer-post").length) {
+    var floatingButton = $(".floating-button")
+    if (floatingButton.length) {
       var lastScrollTop = 0;
       $(window).on("scroll", function () {
         var topDistance = $(window).scrollTop();
 
         if (topDistance > lastScrollTop) {
-          // downscroll -> show menu
-          $("#footer-post").hide();
+          // downscroll -> hide menu
+          floatingButton.css('transform', 'translateY(90px)')
         } else {
-          // upscroll -> hide menu
-          $("#footer-post").show();
+          // upscroll -> show menu
+          floatingButton.css('transform', 'none')
         }
         lastScrollTop = topDistance;
 
