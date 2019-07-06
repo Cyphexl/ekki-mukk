@@ -7,14 +7,18 @@
       list-style-type: none
 
       .post-title
+        margin-right: 10px
         a
           margin-right: 0
           @media (max-width: 480px)
             margin-right: 0
-        a:hover, a:active
+
+      .post-title:hover, .post-title:active
+        background-color: $color-text
+        a
           text-decoration: none
-          background-color: $color-text
           color: $color-background
+          position: relative
 
       .meta
         display: block

@@ -4,16 +4,16 @@
     <% var change = false %>
     <% var field_sort = theme.archive.sort_updated ? 'updated' : 'date' %>
     <% page.posts.sort(field_sort, 'desc').each(function(post) { %>
-      <% var itemYear = date(post[field_sort], 'YYYY') - 0 %>
-      <% change = year !== itemYear %>
-      <% year = change ? itemYear : year %>
-      <% if (change) { %>
-        <h2><%= year %></h2>
-      <% } %>
-      <li class="post-item">
-        <span class="post-title hugo-h3"><%- partial('_partial/post/title', { post: post, index: true, class_name: '' }) %></span>
-        <%- partial('_partial/post/tag_archive', { post: post, class_name: 'meta' }) %>
-      </li>
+    <% var itemYear = date(post[field_sort], 'YYYY') - 0 %>
+    <% change = year !== itemYear %>
+    <% year = change ? itemYear : year %>
+    <% if (change) { %>
+    <h2><%= year %></h2>
+    <% } %>
+    <li class="post-item">
+      <span class="post-title hugo-h3"><%- partial('_partial/post/title', { post: post, index: true, class_name: '' }) %></span>
+      <%- partial('_partial/post/tag_archive', { post: post, class_name: 'meta' }) %>
+    </li>
     <% }); %>
   </ul>
   <%- partial('_partial/pagination') %>

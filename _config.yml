@@ -75,15 +75,11 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: hugo
 
-# asset_pipeline:
-#   revisioning:
-#     enable: true
-#   clean_css:
-#     enable: true
-#   uglify_js:
-#     enable: false
-#   html_minifier:
-#     enable: true
+asset_pipeline:
+  revisioning:
+    enable: false
+  html_minifier:
+    enable: true
 
 # Math
 mathEngine: 'katex' # 'katex' or 'mathjax'
