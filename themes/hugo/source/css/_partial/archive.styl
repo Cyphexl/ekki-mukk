@@ -1,0 +1,31 @@
+#archive
+  .post-list
+    padding: 0
+
+    .post-item
+      margin-bottom: 5rem
+      list-style-type: none
+
+      .post-title
+        a
+          margin-right: 0
+          @media (max-width: 480px)
+            margin-right: 0
+        a:hover, a:active
+          text-decoration: none
+          background-color: $color-text
+          color: $color-background
+
+      .meta
+        display: block
+        margin-right: 16px
+        min-width: 100px
+        color: $color-meta
+        font-size: 14px
+
+      .post-tags
+        display: inline-block
+        vertical-align: top
+        margin-top: 20px
+        @media (max-width: 480px)
+          margin-top: 5px

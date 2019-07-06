@@ -1,0 +1,169 @@
+<%
+    let portfolioData = [
+        {
+            title: 'Yonder',
+            tag: 'Branding | 2019',
+            link: 'https://www.behance.net/gallery/82499511/-YONDER',
+            imgurl: 'yonder.jpg'
+        },
+        {
+            title: 'Wu-Hsu',
+            tag: 'Poster | 2018',
+            link: 'https://www.behance.net/gallery/68687533/Wu-Hsu',
+            imgurl: 'wu-hsu.jpg'
+        },
+        {
+            title: 'Know',
+            tag: 'Poster | 2018',
+            link: 'https://www.behance.net/gallery/68681739/Know-Poster-Series',
+            imgurl: 'know.jpg'
+        },
+        {
+            title: 'Pinellia Memories',
+            tag: 'Poster | 2017',
+            link: '#',
+            imgurl: 'pinellia-memories.jpg'
+        },
+        {
+            title: 'Tompølevos',
+            tag: 'Digital Art | 2017',
+            link: 'https://www.behance.net/gallery/68687983/Tompoelevos',
+            imgurl: 'tompolevos.jpg'
+        },
+        {
+            title: 'Campus Perspectives',
+            tag: 'Photography | 2017',
+            link: 'https://www.behance.net/gallery/68686041/Campus-Perspectives',
+            imgurl: 'campus-perspectives.jpg'
+        },
+        {
+            title: 'Nineteen',
+            tag: 'Illustration | 2017',
+            link: 'https://www.behance.net/gallery/68682667/Nineteen',
+            imgurl: 'nineteen.jpg'
+        },
+        {
+            title: 'Slabrush',
+            tag: 'Typeface Design | 2016',
+            link: 'https://www.foundertype.com/index.php/News/newsdetails/id/18.html',
+            imgurl: 'slabrush.jpg'
+        },
+        {
+            title: 'Choco Continental',
+            tag: 'Packaging Design | 2016',
+            link: 'https://www.behance.net/gallery/68686217/Continental-Choco',
+            imgurl: 'continental-choco.jpg'
+        },
+        {
+            title: 'Heat Passage',
+            tag: 'Poster Design | 2017',
+            link: 'https://www.behance.net/gallery/68686951/Heat-Passage',
+            imgurl: 'heat-passage.jpg'
+        },
+        {
+            title: 'Tianjin University Rebranding',
+            tag: 'Branding | 2017',
+            link: 'https://www.behance.net/gallery/68683553/Tianjin-University-Rebranding',
+            imgurl: 'tju-tube.jpg'
+        },
+        {
+            title: 'Parascence',
+            tag: 'Digital Art | 2016',
+            link: 'https://www.behance.net/gallery/68822861/Parascence',
+            imgurl: 'parascence.jpg'
+        },
+        {
+            title: 'Lighting the Map Together',
+            tag: 'Data Visualization | 2019',
+            link: '#',
+            imgurl: 'lightmap.jpg'
+        },
+        {
+            title: 'Nankai 1904-2014',
+            tag: 'Digital Art | 2014',
+            link: 'https://www.behance.net/gallery/68823099/-1904-2014',
+            imgurl: 'nankai.jpg'
+        }
+    ]
+%>
+
+<p class="page-note inverta">
+    Links are external. When you click on an image, be prepared to leave this site. <br/>
+    Customers located in Mainland China may need a VPN to browse Behance - May I politely express my concern towards internet censoring here.<br/><br/>
+    以下为外部链接，您将被重定向至 Behance 的作品页面。请注意，您可能需要搭建科学上网环境来浏览 Behance。<br/>
+    和您一样，我痛恨互联网审查。
+    <i class="fas fa-sign-in-alt ambienta"></i>
+</p>
+
+<div id='portfolio' class="dw">
+    <% portfolioData.forEach((artwork) => { %>
+    <a href="<%= artwork.link %>" class='single-block dw-panel'>
+        <div class='single-block-fence'>
+            <img class="single-block-image dw-panel__content" src="index/<%= artwork.imgurl %>">
+            <div class="single-block-content">
+                <span class='artwork-title hugo-degrec'>
+                    <%= artwork.title %>
+                </span>
+            </div>
+        </div>
+    </a>
+    <% }) %>
+</div>
+
+<style>
+
+    .page-note {
+        line-height: 1.3;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+    .page-note .ambienta {
+        position: absolute;
+        font-size: 200px;
+        opacity: 0.1;
+        right: 10px;
+        bottom: -10px;
+    }
+    .single-block {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all .2s;
+        perspective: 1000px;
+        -webkit-perspective: 1000px;
+    }
+
+    .single-block-fence {
+        transform: rotateY(-180deg);
+        transform-style: preserve-3d;
+        filter: grayscale(1);
+        transition: all 12s ease-in;
+    }
+
+    .single-block:hover .single-block-fence {
+        transform: rotateY(0deg);
+        filter: grayscale(0);
+        transition: all .7s;
+    }
+
+    .title-container {
+        transition: all .2s;
+        position: relative;
+    }
+
+    .artwork-title {
+        top: 10px;
+        left: 10px;
+        position: absolute;
+    }
+
+    .single-block-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+</style>
+
+
+<%- css('lib/bricks/driveway.css') %>

@@ -1,0 +1,9 @@
+
+    <% let res = "" %>
+    <% post.tags.data.forEach(function(tag) { %>
+        <% res += " | " %>
+        <% res += tag.name %>
+    <% }) %>
+    <% res = res.slice(3) %>
+    <% if (res == "") res = "Untagged" %>
+    <span class="post-tags hugo-degrec"><%= res %></span>

@@ -1,0 +1,279 @@
+@import "_fonts"
+@import "_variables"
+@import "_colors/" + $colors
+@import "_util"
+@import "_mixins"
+@import "_extend"
+
+global-reset()
+
+*, *:before, *:after
+  box-sizing: border-box
+  -webkit-tap-highlight-color: transparent
+
+*::selection
+  background-color: $color-accent-3
+  color: $color-background
+
+a
+  transition: color .2s
+  
+html
+  margin: 0
+  padding: 0
+  height: 100%
+  -webkit-text-size-adjust: 100%
+  -ms-text-size-adjust: 100%
+
+body
+  margin: 0
+  height: 100%
+  background-color: $color-background
+  color: $color-text
+  font-display: swap // @stylint ignore
+  font-weight: 400
+  font-size: $font-size
+  font-family: $font-family-body
+  line-height: $line-height
+  text-rendering: geometricPrecision
+  flex: 1
+
+  antialias()
+
+  @extend $base-style
+
+#body
+  padding-left: 4rem
+  padding-right: 4rem
+  @media (max-width: 1000px)
+    padding-left: 3rem
+    padding-right: 3rem
+  @media (max-width: 480px)
+    padding-left: 2rem
+    padding-right: 2rem
+
+.content
+  position: relative
+  display: flex
+  flex-direction: column
+  min-height: 100%
+  overflow-wrap: break-word
+
+  p
+    hyphens(auto)
+
+  code
+    hyphens(manual)
+
+  a, a:link, a:hover, a:active, a:visited
+    color: inherit
+    text-decoration: none
+
+  a:hover
+    cursor: pointer
+
+  a:not(.unstyled)
+    color: $color-text
+    underline(5px, $color-text)
+
+  a:not(.unstyled).icon
+    background: none
+
+    &:hover
+      color: $color-link
+
+  h1 a, .h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
+    background: none
+    color: inherit
+    text-decoration: none
+
+  h1 a:hover, .h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover
+    underline(6px, $color-link)
+
+  h6
+    a
+      background: none
+      color: inherit
+      text-decoration: none
+
+  h6
+    a:hover
+      underline(6px, $color-link)
+
+@media (min-width: 540px)
+  .image-wrap
+    flex-direction: row
+    margin-bottom: 2rem
+
+    .image-block
+      flex: 1 0 35%
+      margin-right: 2rem
+
+    p
+      flex: 1 0 65%
+
+.max-width
+  max-width: $page-width
+
+@media (max-width: 480px)
+
+  .my4
+    margin-top: 2rem
+    margin-bottom: 2rem
+
+@media (min-width: 480px)
+  p
+    text-align: justify
+
+@import "_partial/header"
+@import "_partial/post/actions_desktop"
+@import "_partial/post/actions_mobile"
+@import "_partial/index"
+@import "_partial/article"
+@import "_partial/archive"
+@import "_partial/comments"
+@import "_partial/footer"
+@import "_partial/pagination"
+@import "_partial/search"
+@import "_partial/tags"
+@import "_partial/categories"
+// Code
+@import "_highlight/" + $highlight
+
+pre
+  overflow-x: auto
+  padding: 10px 15px
+  padding-bottom: 0
+  border: 1px dotted $color-border
+  border-radius: 4px
+  font-size: 13px
+  font-family: $font-family-mono
+  line-height: 22px
+  -webkit-border-radius: 4px
+
+  code
+    display: block
+    padding: 0
+    border: none
+    
+
+code
+  padding: 0 5px
+  background: $color-background-code
+  font-family: $font-family-mono
+  
+
+figure
+  margin: 10px 0 10px
+  text-align: center
+
+  figcaption
+    margin: 8px 0
+    font-size: .9em
+    opacity: 0.5
+
+.highlight
+  overflow-x: auto
+  margin: 1rem 0
+  padding: 10px 15px
+  border-radius: 4px
+  background: $color-background-code
+  font-family: $font-family-mono
+  // color: $color-accent-3
+  -webkit-border-radius: 4px
+
+  figcaption
+    margin: -5px 0 5px
+    color: $color-meta-code
+    font-size: .9em
+    zoom: 1
+
+    a
+      float: right
+      color: $color-meta-code
+      font-style: italic
+      font-size: .8em
+
+      underline(10px, $color-link)
+
+    a:hover
+      color: lighten($color-meta-code, 20%)
+
+    &:before, content: ""
+      display: table
+
+    &:after
+      clear: both
+
+  pre
+    padding: 0
+    border: none
+    background: none
+
+  table
+    width: auto
+    overflow-y: hidden
+
+  td.gutter
+    text-align: right
+
+  .line
+    height: 22px
+
+.inverta
+  color: $color-background
+  background-color: $color-text
+
+
+.hugo-h1
+  font-size: 12em
+  line-height: 1
+  letter-spacing: -10px
+  font-weight: bold
+  color: $color-text
+  @media (max-width: 1000px)
+    font-size: 6em
+    letter-spacing: -5px
+  @media (max-width: 480px)
+    font-size: 4em
+    letter-spacing: -3px
+
+.hugo-h3
+  font-size: 8em
+  line-height: 1
+  letter-spacing: -5px
+  font-weight: bold
+  color: $color-text
+  @media (max-width: 1000px)
+    font-size: 6em
+    letter-spacing: -4px
+  @media (max-width: 480px)
+    font-size: 3em
+    letter-spacing: -1px
+
+.hugo-h5
+  font-size: 5em
+  line-height: 1
+  letter-spacing: -4px
+  font-weight: bold
+  color: $color-text
+  @media (max-width: 1000px)
+    font-size: 5em
+    letter-spacing: -4px
+  @media (max-width: 480px)
+    font-size: 3em
+    letter-spacing: -1px
+
+.hugo-reverted
+  background-color: $color-text
+  color: $color-background
+  display: inline
+
+.hugo-degrec
+  background-color: $color-text
+  color: $color-background
+  padding: 3px 10px 3px
+  font-size: 10px
+  text-transform: uppercase
+  letter-spacing: 3px
+  font-weight: bold
