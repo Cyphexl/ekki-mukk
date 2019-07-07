@@ -102,6 +102,10 @@ math:
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
-
+  type: sftp
+  host: www.tzingtao.com
+  user: bitnami
+  remotePath: /var/www/tzingtao.com/html
+  port: 22
+  privateKey: D:\Develop\site\Yvette.pem
 
