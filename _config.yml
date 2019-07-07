@@ -81,6 +81,9 @@ asset_pipeline:
   html_minifier:
     enable: true
 
+# RTL
+direction: ltr
+
 # Math
 mathEngine: 'katex' # 'katex' or 'mathjax'
 math:
