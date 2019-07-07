@@ -20,6 +20,10 @@
           color: $color-background
           position: relative
 
+      .post-title:hover + .post-tags, .post-title:active + .post-tags
+        background: transparent
+        color: $color-text
+
       .meta
         display: block
         margin-right: 16px
@@ -31,5 +35,6 @@
         display: inline-block
         vertical-align: top
         margin-top: 20px
+        transition: all .2s
         @media (max-width: 480px)
           margin-top: 5px
