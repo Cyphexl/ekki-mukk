@@ -75,4 +75,4 @@ prepend domain-name-servers 8.8.4.4
 $ chattr +i /etc/resolv.conf
 ```
 
-这一行命令使得即便 root 用户也无法对 resolv.conf 进行重写。如果你的主机只用来作代理使用，那么进行这一强制更改通常是可接受的，并没有太大的问题。🖉
+这一行命令使得即便 root 用户也无法对 resolv.conf 进行重写。如果你的主机只用来作代理使用，那么进行这一强制更改通常是可接受的，并没有太大的问题。
