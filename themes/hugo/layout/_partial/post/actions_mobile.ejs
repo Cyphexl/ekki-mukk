@@ -35,12 +35,14 @@
   function closePanel() {
     $('.post-dim-panel').fadeOut()
     $('#toggle-dim-panel-icon').css("transform", "initial")
+    $('html').removeClass('noscroll')
     dimPanelVisible = false
   };
 
   function openPanel() {
     $('.post-dim-panel').css("display", "flex").hide().fadeIn()
     $('#toggle-dim-panel-icon').css("transform", "rotate(45deg)")
+    $('html').addClass('noscroll')
     dimPanelVisible = true
   }
 
