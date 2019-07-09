@@ -7,14 +7,25 @@
   }
 }
 
-
-.suffix-icon
-  font-size: 0.4em
+svg.suffix-icon
+  width: 70px
   vertical-align: super
   animation: rotate-center 45s linear infinite both
   transition: all .2s
-  
+  @media (max-width: 1000px)
+    width: 50px
+  @media (max-width: 480px)
+    width: 28px
 
-.suffix-icon:hover
+a.suffix-icon
+  position: absolute
+  display: inline-block
+  margin-left: 20px
+  @media (max-width: 1000px)
+    margin-left: 10px
+  @media (max-width: 480px)
+    margin-left: 5px
+
+svg.suffix-icon:hover
   animation-play-state: paused
   opacity: 0.7
