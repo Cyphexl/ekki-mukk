@@ -1,31 +1,20 @@
-.post-list
-  padding: 0
+@keyframes rotate-center {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
-  .post-item
-    margin-bottom: 1rem
-    margin-left: 0
-    list-style-type: none
 
-    .meta
-      display: block
-      margin-right: 16px
-      min-width: 100px
-      color: $color-meta
-      font-size: 14px
+.suffix-icon
+  font-size: 0.4em
+  vertical-align: super
+  animation: rotate-center 45s linear infinite both
+  transition: all .2s
+  
 
-@media (min-width: 480px)
-  .post-list
-    .post-item
-      margin-bottom: 5px
-
-      .meta
-        text-align: left
-
-.project-list
-  padding: 0
-  list-style: none
-
-  .project-item
-    margin-bottom: 5px
-    p
-      display: inline
+.suffix-icon:hover
+  animation-play-state: paused
+  opacity: 0.7
