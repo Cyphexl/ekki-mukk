@@ -4,11 +4,35 @@
         Connect Me
     </h1>
     <p>
-            <strong>i@tzingtao.com.</strong><br />Datone Student Centre, Tianjin University (Peiyang Villa Campus), Yakwan Road No. 135<br />
-        Haihe Educational Park, Jinnan District, Tianjin, PRC 300350. 
+        <strong>i@tzingtao.com.</strong><br />Datone Student Centre, Tianjin University (Peiyang Villa Campus), Yakwan
+        Road No. 135<br />
+        Haihe Educational Park, Jinnan District, Tianjin, PRC 300350. <br />
+        Find me on 
+        <% var nb_links = Object.keys(theme.social_links).length %>
+        <% var i = 0 %>
+        <% for(var link in theme.social_links) { %>
+        <% if (link == 'mail') { %>
+        <a class="social-link unstyled icon" target="_blank" href="<%- url_for(theme.social_links[link]) %>">
+            <i class="fas fa-envelope"></i>
+            <!--
+        ---></a>
+        <!--
+        ---><% } else { %>
+        <a class="social-link unstyled icon" target="_blank" href="<%- url_for(theme.social_links[link]) %>">
+            <i class="fab fa-<%= link %>"></i>
+            <!--
+        ---></a>
+        <!--
+      ---><% } %>
+        <!--
+      ---><%= ( nb_links > 0 && i < nb_links-1 ?
+              ( __('index.enum_slash')+' ' )
+              : '.' ) %>
+        <% i+=1 %>
+        <% } %>
     </p>
 
-        <h1 class="hugo-h3">
+    <h1 class="hugo-h3">
         Friends
     </h1>
     <p>
@@ -95,11 +119,82 @@
 
 
 <style>
-    @keyframes vibrate{0%{transform:translate(0)}10%{transform:translate(-1px,-1px)}20%{transform:translate(1px,-1px)}30%{transform:translate(-1px,1px)}40%{transform:translate(1px,1px)}50%{transform:translate(-1px,-1px)}60%{transform:translate(1px,-1px)}70%{transform:translate(-1px,1px)}80%{transform:translate(-1px,-1px)}90%{transform:translate(1px,-1px)}100%{transform:translate(0)}}
-    .friends-container {margin-top: 20px;}
-    /*.friends-container {display:flex; justify-content:space-between; flex-wrap:wrap;}*/
-    .single-friend {display:inline-block; width: 230px; margin-bottom: 20px; transition: all .2s}
-    .single-friend:hover {animation:vibrate .5s linear infinite both}
-    .friend-website-name {margin:0; font-size: 1rem;}
-    .friend-name {font-size: 0.6em; opacity: 0.5;}
+    @keyframes vibrate {
+        0% {
+            transform: translate(0)
+        }
+
+        10% {
+            transform: translate(-1px, -1px)
+        }
+
+        20% {
+            transform: translate(1px, -1px)
+        }
+
+        30% {
+            transform: translate(-1px, 1px)
+        }
+
+        40% {
+            transform: translate(1px, 1px)
+        }
+
+        50% {
+            transform: translate(-1px, -1px)
+        }
+
+        60% {
+            transform: translate(1px, -1px)
+        }
+
+        70% {
+            transform: translate(-1px, 1px)
+        }
+
+        80% {
+            transform: translate(-1px, -1px)
+        }
+
+        90% {
+            transform: translate(1px, -1px)
+        }
+
+        100% {
+            transform: translate(0)
+        }
+    }
+
+    .friends-container {
+        margin-top: 20px;
+    }
+
+    .single-friend {
+        display: inline-block;
+        width: 230px;
+        margin-bottom: 20px;
+        transition: all .2s
+    }
+
+    .single-friend:hover {
+        animation: vibrate .5s linear infinite both
+    }
+
+    .friend-website-name {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .friend-name {
+        font-size: 0.6em;
+        opacity: 0.5;
+    }
+
+    a.social-link {
+        display: inline-block;
+        margin-right: 4px;
+    }
+    a.social-link:hover {
+        animation: vibrate .5s linear infinite both;
+    }
 </style>

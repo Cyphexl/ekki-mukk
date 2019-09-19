@@ -13,6 +13,7 @@ footer:
 index:
   find_me_on: Find me on
   enum_comma: ','
+  enum_slash: '/'
   enum_and: and
   articles: Writings
   projects: Projects
