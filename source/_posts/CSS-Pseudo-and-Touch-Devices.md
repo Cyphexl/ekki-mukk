@@ -4,6 +4,7 @@ title: CSS Sticky Hover and Pseudo States
 date: 2018-05-30 22:56:27
 tags: Tech
 ---
+
 ## BACKGROUND
 
 接触过 CSS 的人应该都熟悉 `:hover` 伪类。其最常用的场景为鼠标经过并悬停 (hover) 于该元素之上时，元素样式发生的变化。
@@ -35,7 +36,6 @@ button:hover {
 此逻辑与另一个 CSS 动态伪类 `:focus` 非常相似。在这里，「屏幕范围内有另一个元素被点按」对应着 `:focus` 失去焦点被摘下的表现。而「 `:hover` 状态在点按结束后被持续保留」，就是我们所说的在触屏设备上的 **sticky-hover（粘滞性悬停）**特点。
 
  
-
 ## STICKY-HOVER
 
 **也许有个人的感情色彩，但 sticky-hover 是一个非常讨厌的现象。**
