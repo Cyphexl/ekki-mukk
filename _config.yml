@@ -108,7 +108,7 @@ deploy:
   type: sftp
   host: www.tzingtao.com
   user: bitnami
-  remotePath: /var/www/tzingtao.com/html
+  remotePath: /opt/bitnami/nginx/html
   port: 22
   privateKey: D:\Develop\site\Yvette.pem
 

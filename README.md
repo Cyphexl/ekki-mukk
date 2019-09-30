@@ -9,4 +9,3 @@ The theme used in Ekki Múkk *Hugo* was a derivative of the theme [Cactus](https
 ![Demo](https://i.loli.net/2019/07/08/5d230276949f058546.png)
 
 Ekki Múkk means "No Sound" in Icelandic. Please note that this website is not intended for public use by design.
-
