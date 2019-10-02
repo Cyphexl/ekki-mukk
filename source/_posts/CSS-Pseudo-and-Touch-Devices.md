@@ -7,9 +7,9 @@ tags: Tech
 
 ## BACKGROUND
 
-接触过 CSS 的人应该都熟悉 `:hover` 伪类。其最常用的场景为鼠标经过并悬停 (hover) 于该元素之上时，元素样式发生的变化。
+If you're familiar with CSS, you have probably used `:hover` pseudo-states. A typical scenario for this grammar is to signify state changes for clickable elements.
 
-例如，当我们指定如下 CSS 代码：
+For example, when we write:
 
 ```css
 button {
@@ -21,19 +21,19 @@ button:hover {
 }
 ```
 
-在不存在其它干扰的情况下，这段代码会让 HTML 中的 button 元素在鼠标悬停时，透明度从 1 变为 0.9。
+Without other interferences, this will fade the button opacity to 0.9 when the user's mouse is hovering over it.
 
-`:hover` 伪类很重要，因为它向用户即时地传达了哪些元素是可操作 / 可点击的，而哪些元素没有这些交互功能。 `cursor: pointer` 通常和 `:hover` 伪类的样式变化一起使用，以表达更加完善、丰富的交互反馈。
+Proper use of the `:hover` pseudo-state is important. It conveys information to users on which element is clickable, and which is not. `cursor: pointer` is often paired with `:hover` to perform richer and more precise feedback for user interactions.
 
-**问题在于，传统的 Web 浏览方式是通过键鼠交互的桌面设备。自 2007 年以来，智能手机开始成为越来越流行的 Web 浏览设备。很显然，在触屏设备中，并没有能恰当对应键鼠操控中 hover 的动作。**
+**The problem is, `:hover` is designed exclusively for desktop devices. Since 2007, smartphones and other touch devices became increasingly popular. Obviously, there are no corresponding actions for mouse hovering on touch devices.**
 
-但如果你平时曾有过注意，便会发现各个智能手机上的浏览器都不约而同地采用了「手指点按」作为触发 `:hover` 伪类样式的 trigger。
+Despite that, most of the browsers for touch devices eccentrically implemented hover state, and instead of mouse hovering, the trigger became a touch start event.
 
-触屏设备上的具体表现是：
+To describe the behavior logic concretely:
 
-> 在手指点按一个元素时，同时激活元素的 `:hover` 和 `:active`。**在手指抬离屏幕或移向元素之外时，元素的 :active 状态被摘下，但 :hover 状态被持续保留，直到屏幕范围内有另一个元素被点按。**
+> When your finger presses on an element, both of its `:hover` and `:active` pseudo-states are triggered. When the finger leaves the screen, the `:active` state is removed, whereas the `:hover` state stays until another element is pressed.
 
-此逻辑与另一个 CSS 动态伪类 `:focus` 非常相似。在这里，「屏幕范围内有另一个元素被点按」对应着 `:focus` 失去焦点被摘下的表现。而「 `:hover` 状态在点按结束后被持续保留」，就是我们所说的在触屏设备上的 **sticky-hover（粘滞性悬停）**特点。
+Here, the "stays until another element is pressed" behavior looks somewhat identical to another pseudo-state `:focus`, which also loses its active status on another touch event start. And this period of stay is the topic of this article - **Sticky Hover**.
 
  
 ## STICKY-HOVER
