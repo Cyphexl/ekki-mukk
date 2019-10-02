@@ -5,16 +5,16 @@ tags: Tech
 math: true
 ---
 
-在近期开发的项目 [微北洋 4.0 React-Native](https://github.com/Cyphexl/WePeiYang-RN) 中，课表（schedule）模块以其复杂布局、难以捉摸的边界情况与特殊 case，成为整个微北洋开发当之无愧的重头模块。
+In my recently developing project [WePeiyang 4.0 React-Native](https://github.com/Cyphexl/WePeiYang-RN), the Schedule module is a well-deserved most knotty one for its elusive special cases and complicated layout implementation.
 
-于我看来，实现课表的主要困难之处，在于「如何比以前的版本做得更好」。微北洋本身将近 10 年的开发史，意味着相关技术的沉淀已经很有分量；而上一版本微北洋 3.0，也经过了数年的实践检验，功能完备且具有健壮性，本身无需一次迫切的升级。而既然选择了主动打破现状，去开发新版本，那便一定要有充分的理由。
+To me, the hardest part is "how to advance a further step." WePeiyang itself has a 10 years history of development, signifying the weight of its accumulated relevant experiences. The previous major version of WePeiyang, 3.0, has also been through the test of time. It is fully functional and most importantly, robust, not requiring an immediate upgrade itself. Since I have decided to break this status quo and initiate a new version, there must be good reasons.
 
 <figure>
     {% asset_img wpy3.png %}
-    <figcaption>Fig. 功能完备的微北洋 3.0 课表模块</figcaption>
+    <figcaption>Fig. Schedule Module of WePeiyang 3.0</figcaption>
 </figure>
 
-不再讲述过多的故事，在以下的篇幅中，我会简要描述一下新版本努力目标、实现和设计需求中遇到的问题，以及相关的思考。
+No more story-telling here. In the following pages, I will briefly describe the problems encountered in the requirement, design and development stages, and give an idea about how I managed to solve them.
 
 
 
