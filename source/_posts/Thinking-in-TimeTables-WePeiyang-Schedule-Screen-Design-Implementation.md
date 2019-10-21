@@ -35,23 +35,20 @@ To ensure consistency across the daily schedule component in the home screen and
 
 ## Dotmap
 
-
-
-Dotmap 即是微北洋 3.0 起加入的位于课程表上方的每周点阵。这些点阵以一种抽象而又直观的方式，告知了用户课程安排下被占用时间、空闲时间的比率和分布特征。
-
-我不是这个点阵的设计者，但我非常喜欢它。
+Dotmap is a component that tells users how their time is occupied. It is introduced since WePeiyang 3.0. I'm not the one who designed it, but I like it very much.
 
 <figure>
     {% asset_img dotmap2.png %}
-    <figcaption>Fig. 微北洋的 Dotmap</figcaption>
+    <figcaption>Fig. The Dotmap abstracts the full schedule into a... well, dot map.</figcaption>
 </figure>
-微北洋 3.0 下的每周点阵是严格的 5×5 点阵，这意味着它们具有固定的宽高和间距，并不需要担心可变布局。**但在微北洋 4.0 中，一个主要的更新是允许用户自由选择每周显示天数。**如果选择显示周末，那么意味着 Dotmap 将变成 7×5 的点阵。
 
-我们需要一个更有灵活性的组件。
+In WePeiyang 3.0, the Dotmap is a fixed 5×5 matrix, which means they can have hard-coded dot margin and component size. In WePeiyang 4.0, however, one notable feature is the variability and flexibility of course tables. Users are given choices on determining how many days they want to show each week. While most students have courses arranged between workdays, some of them need to take classes on weekends. If they choose to display from Monday to Sunday, inclusive, then the Dotmap should be of 7×5 size.
 
-实现灵活 Dotmap 最理想的方式是使用类似 CSS 中的 grid 布局。React-Native 尚不支持 Grid 布局，我们仍可以通过两层 Flexbox 嵌套实现。内部的 Columns 和 Dots 元素排列方式均设置为 `justify-content: space-between`，是实现此 Dotmap 的核心。
+We need a more flexible component - for a flexible solution.
 
-Dotmap 组件的代码很简短，但也足够有趣：
+To implement such a Dotmap, the ideal layout model is CSS Grid Layout. Sadly, React-Native doesn't ship with those fancy stuff. What should we do? It turns out that we can still achieve that using two nesting Flexbox Layouts. The core idea is to set the inner columns and dots flexboxes to `justify-content: space-between`.
+
+If you catch this core idea, the actual implementation of Dotmap can be very concise and elegant.
 
 ```jsx
 export function Dotmap(props: DotmapProps) {
@@ -74,12 +71,13 @@ export function Dotmap(props: DotmapProps) {
 
 ```
 
-测试效果：
+Runtime screenshots:
 
 <figure>
     {% asset_img dotmap.png %}
-    <figcaption>Fig. 一周 15 天也可以轻松 Handle 的 Dotmap</figcaption>
+    <figcaption>Fig. The Dotmap that can handle even 15 days a week at ease.</figcaption>
 </figure>
+
 
 
 ## Layout
