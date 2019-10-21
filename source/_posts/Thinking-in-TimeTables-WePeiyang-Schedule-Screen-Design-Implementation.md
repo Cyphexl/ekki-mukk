@@ -5,9 +5,9 @@ tags: Tech
 math: true
 ---
 
-In my recently developing project [WePeiyang 4.0 React-Native](https://github.com/Cyphexl/WePeiYang-RN), the Schedule module is a well-deserved most knotty one for its elusive special cases and complicated layout implementation.
+In my recently developing project, [WePeiyang 4.0 React-Native](https://github.com/Cyphexl/WePeiYang-RN), the Schedule module is a well-deserved, most knotty one for its elusive special cases and complicated layout implementation.
 
-To me, the hardest part is "how to advance a further step." WePeiyang itself has a 10 years history of development, signifying the weight of its accumulated relevant experiences. The previous major version of WePeiyang, 3.0, has also been through the test of time. It is fully functional and most importantly, robust, not requiring an immediate upgrade itself. Since I have decided to break this status quo and initiate a new version, there must be good reasons.
+To me, however, the hardest part is "how to advance a further step." WePeiyang itself has a 10 years history of development, signifying the weight of its accumulated relevant experiences. The previous major version of WePeiyang, 3.0, has also been through the test of time. It is fully functional and, most importantly, robust, not requiring an immediate upgrade itself. Since I have decided to break this status quo and initiate a new version, there must be a good reason.
 
 <figure>
     {% asset_img wpy3.png %}
@@ -20,20 +20,22 @@ No more story-telling here. In the following pages, I will briefly describe the 
 
 ## Visual Identity Design
 
-微北洋 4.0 的起源是一份来自 Owlling 的设计稿。这份设计稿定下了新版微北洋视觉识别特征层面的基底。**但是，课程表、GPA 等复杂布局的内部模块并没有被实现**（事实上，仅仅通过 Sketch 也很难定义和渲染这种复杂布局的设计图稿）。
+Although the development process didn't start until June 2019, the origin of WePeiyang 4.0 can be traced back to a year ago. In 2018, Owlling worked on a conceptual design draft of the new generation of WePeiyang. This draft laid a base of what the application should look like in general. However, it didn't implement the modules that involve relatively complex layout, e.g., GPA and Schedule.
 
 <figure>
     {% asset_img design-all.png %}
-    <figcaption>Fig. 来自 Owlling 的设计稿包含了主页、个人中心、新闻、自行车等模块的界面设计图，但并未包含 GPA、课程表等较复杂布局的实现。</figcaption>
+    <figcaption>Fig. The conceptual design proposal from Owlling. Only a portion of all layouts required was implemented.</figcaption>
 </figure>
 
-在主页中，「当日课程」一栏被一个横向的 `ScrollView` 占据，内部按照时间顺序，线性地排列了今日所有课程。每个课程拥有一个固定的识别色，样式上则表现为以该识别色为背景的圆角矩形。
+The "daily schedule" component in the home screen is essentially a horizontal `ScrollView`. Inside the view, all courses arranged today are shown linearly. Each course has an identity color, and each `CourseBlock` is essentially a rounded rectangle showing course information with a background of that color.
 
-为了保持主页和内部模块的视觉一致性，课程的识别色和圆角矩形表示被沿用至了课程表模块。除此之外，模块的主色调、标题样式、TopBar 控件和点击课程后出现的对话框等，也都最大限度地保持了同其余模块的一致性。
+To ensure consistency across the daily schedule component in the home screen and the Schedule module, the identity color and the rounded rectangle shapes were adopted. In addition to this, the palette tone, heading style, TopBar component, and the modal that pops up after clicking on a `CourseBlock` are re-designed to keep consistency across this module and other modules.
 
 
 
 ## Dotmap
+
+
 
 Dotmap 即是微北洋 3.0 起加入的位于课程表上方的每周点阵。这些点阵以一种抽象而又直观的方式，告知了用户课程安排下被占用时间、空闲时间的比率和分布特征。
 
