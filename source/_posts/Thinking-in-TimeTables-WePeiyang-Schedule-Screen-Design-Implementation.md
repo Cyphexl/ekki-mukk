@@ -82,27 +82,27 @@ Runtime screenshots:
 
 ## Layout
 
-课程表沿用了微北洋 3.0 的经典栅格式布局。我们曾经考虑过，是否修改为单日横向排列，同时复用主页的「当日课程」模块以降低开发难度。但考虑到用户群体大都从小学开始便习惯了单日纵向的课程表，因此决定还是按照纵向栅格式开发。
+The schedule layout is inherited from the standard grid layout used in WePeiyang 3.0. We considered changing the design to a stacked linear structure so that the daily schedule component in the home screen can be reused to lower the development workload. However, while the stacked linear design is more commonly seen in apps designed in the west, students in China are more familiar with the grid layout since the elementary schools. 
 
-由于内模块信息量显著增大，布局紧张，因此替换并舍去了课程时间等不再必要的信息，并在手机竖屏下尽可能压缩了横向宽度。此外，我们还添加了各种尺寸屏幕下的响应式布局支持，包括常规手机屏幕的横屏下显示。
+We decided to go with the grid.
+
+The problem with this option is that all information needs to be displayed on the whole screen at once. The amount of information increases, the space becomes extremely limited, so we needed to eliminate all the unnecessary fields and make the width of a single course block compact.
 
 ### Determining Canvas Size
 
-为实现此响应式布局，首先需要决定课程表的渲染高度。宽度是确定的，大抵就是屏幕减去边距。而高度是可变的，为了让合适的高度能够同时达成以下五个目标：
+To achieve a responsive layout, we need to make the layout parameters flexible or "computed." The width of the schedule grid can be fixed (to the screen width minus the padding), but the overall height is variable. This variable height, by design, needs to satisfy each of the five requirements below:
 
-- 在手机竖屏时，保证渲染高度，以容下课程方块内部的文字；
-- 在手机横屏时，尽可能缩小渲染高度，使得屏幕能够一次显示整个课程表（或课程表的大半部分）；
-- 在平板电脑类设备尺寸下，整体增加课程方块的大小；
-- 当周末同样有课时，每屏显示 7 天课程安排将导致课程方块更加狭窄，此时有必要增加渲染高度，以保证课程方块可容下文字的数量；
-- 为应对那些渲染高度仍表现不理想的特殊情况，为用户提供在设置中自定义调节高度的可能。
+- When the phone is in portrait mode, we need to secure a more towering height to make all information fit into the course blocks;
+- When the phone is in landscape mode, reduce the height so the screen can display most of the schedule at once;
+- On tablets, the course blocks should have a larger size than on landscape phones;
+- When more days are displayed in a single week view, the rendered height needs to increase so that course information can fit into an even more narrow course block;
+- In cases that the size still can't be adequately auto-determined, allow users to specify a value to adjust it explicitly.
 
-设计以下高度计算公式：
+Design the following algorithm:
 $$
 h_{r}=(h_{m}+\dfrac {h_{s}p}{18-n})N
 $$
-其中，$h_{r}$ 代表课表的总渲染的高度，$h_{s}$ 为通过 `Dimensions.get()` 得到的当前窗口高度，$p$ 代表用户偏好设置中的高度缩放系数，$h_{m}$ 为 margin 高度，$n$ 为每周渲染天数。$N$ 为每天课时数量，恒等于 12。
-
-这部分的代码核心逻辑如下：
+Where $h_{r}$ represents the overall rendered height, $h_{s}$ is the current window height returned from `Dimensions.get()`, $p$ represents the scale coefficient designated by users, $h_{m}$ stands for the margin heights, and $n$ stands for the displayed days each week. $N$ is the number of course slots each day, which constant equals 12.
 
 ```jsx
 // For height, you need to specify height of a single component,
@@ -121,18 +121,19 @@ let scheduleRenderHeight = renderHeight - timeSlotMargin - dateIndicatorHeight
 let renderWidth = this.state.windowWidth - 2 * layoutParam.paddingHorizontal
 ```
 
-实现中还包含了一些细节调整，如对于每周显示天数较多的布局，则天与天之间横向的 margin 也会略有缩小。
+In the actual implementation, some other details were included as well. For example, when there are more days displayed each week, the margins between the columns would be decreased.
 
 <figure>
     {% asset_img 5or7.png %}
-    <figcaption>Fig. 每周显示 5 天或 7 天时的布局（运行于 OnePlus 5T）</figcaption>
+    <figcaption>Figure. The layout in which the displayed days each week is set to 7 and 5, respectively.</figcaption>
 </figure>
+
 
 ### Placing Course Blocks
 
-放置课程方块。很简单，对每天的视图绘制纵向绝对布局，并根据公式计算 `top` 距离即可。
+It's easy. Define a vertical absolute layout, then calculate the `top` property according to the formula.
 
-需要注意的是，`top` 距离可能会因为冲突而需要增加一定的偏移，这点我们稍后会讨论。
+Note that sometimes, the `top` property may be adjusted to create offset to handle the conflicts. We'll further discuss it later.
 
 ### Drawing Course Blocks
 
