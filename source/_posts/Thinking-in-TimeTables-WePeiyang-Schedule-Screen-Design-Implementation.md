@@ -137,28 +137,27 @@ Note that sometimes, the `top` property may be adjusted to create offset to hand
 
 ### Drawing Course Blocks
 
-屏幕尺寸是千变万化的，课程方块本身的尺寸变数同样很大。有可能极度瘦长，有可能扁平，也有可能接近正方形。因此，有必要对每一种情况考虑周全的优化，如有必要，或对内部布局安排做出调整。
+There are infinite sizes of screens. This causes infinitely many possibilities of the calculated course blocks. A course block can be tall and skinny, squashed, or it can resemble a regular square. Therefore, we need to consider all possible circumstances and, if necessary, to adjust the inner layout in each course block individually.
 
-显示于课程表屏幕上的课程方块组件名为 `CourseBlockInner`。一个足够 smart 的 `CourseBlockInner` 组件应该满足以下几点需求：
+The course block components displayed on the inner Schedule screen are called `CourseBlockInner`s. A smart enough `CourseBlockInner` should meet the following requirements:
 
-- 对于渲染出的宽式方块和窄式方块，应当分配各自适应的布局；
-- 字号应该随方块本身的宽高动态调整，避免文字溢出，或是在平板设备上文字过小的问题；
-- 同样地，为应对那些渲染字号仍表现不理想的特殊情况，为用户提供在设置中自定义调节的可能。
+- The layout should be separately designed for the "tall and skinny" blocks and the "short and squatty" ones;
+- The font size should be automatically calculated to fit the block;
+- Similarly, in cases that the font size still can't be adequately auto-determined, allow users to specify a value to scale it explicitly.
 
-实现时设计以下逻辑：
+In the implementation, we designed the following logic:
 
-- 根据宽高的最小值来确定字号基础尺寸；
-- 为所有字号尺寸保留一个用户可调节的系数；
-- 当组件本身宽度有限时，采用窄式布局；否则采用宽式布局，课名独占一行，教师名和上课地点共占一行。
+- Calculate the font size according to the detected layout specs for the current course block;
+- Preserve a coefficient field for font size adjustment;
+- Set a threshold value for the detected width. Use the wide layout when the detected value is above the threshold, use another when below.
 
-这部分的代码大多数是条件样式，此处不再赘述。
-
-总之，最终实际运行时，在不同设备上都保持了较好的布局效果和用户体验：
+The code written here is mostly conditional styles; we'll leave the code and won't go any further into details. Anyway, the results were quite good when we did the actual testing - elegant layout and user experiences were preserved on a variety of screen sizes.
 
 <figure>
     {% asset_img resp.png %}
-    <figcaption>Fig. 响应式布局的实现效果（运行于 iOS Simulator）</figcaption>
+    <figcaption>Figure. The layout behavior in actual testing for different devices. Screenshots are taken from iOS Simulators.</figcaption>
 </figure>
+
 
 
 ## Resolving Scheduling Conflicts
