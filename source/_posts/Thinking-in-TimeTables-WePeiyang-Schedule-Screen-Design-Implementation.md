@@ -164,55 +164,50 @@ The code written here is mostly conditional styles; we'll leave the code and won
 
 ### What conflicts?
 
-和其它的时间表一样，同一时间的重叠时间安排会造成冲突。
+Just like any other timetables, several arrangements in a single time slot can cause conflicts.
 
 <figure>
     {% asset_img conf-types.png %}
-    <figcaption>Fig. 几种常见的冲突 case</figcaption>
+    <figcaption>Figure. Common types of conflicts.</figcaption>
 </figure>
 
-常见的冲突可归类为以下三种：
+We can classify the conflicts into the following three types/categories:
 
-- 完全重叠的冲突。如两节都安排在 8:30 - 10:05 的课程；
-- 具有包含关系的冲突。如安排在同一天 8:30 - 9:15 和 8:30 - 10:05 的课程；
-- 交叠的冲突。如安排在同一天 8:30 - 10:55 和 10:05 - 12:00 的课程。
+- Complete overlap. E.g., two courses both arranged at 8:30 - 10:05 on the same day;
+- (Proper) Subset overlap. E.g., two courses arranged on the same day, one at 8:30 - 9:15 and another at 8:30 - 10:05;
+- Mutual overlap. E.g., two courses arranged on the same day, one at 8:30 - 10:55 and another at 10:05 - 12:00.
 
-此外，还需要考虑一种情况：
+Apart from these, we may also face the case in which:
 
-- 三门及以上课程同时发生冲突。
+- Three or more courses engage in one single conflict.
 
-对天津大学教务系统给出的课程安排，冲突本身是较为罕见的情况；而由于大多课程都是固定时段的 2 节为一单位，大多数冲突都属于第一种 (完全重叠的冲突)。
+In the course arrangements provided by Tianjin University Academic Affairs Office, conflicts are rare. Most conflicts fall within the category I, which results in the strange conflict handling algorithm designed in WePeiyang 3.0.
 
-在微北洋 3.0 及以前的版本，实现的冲突处理思路大致是这样的：**通过查找冲突课程的算法，筛选出有任何一种时间重叠关系的冲突课程，形成冲突组；对于每组冲突课程，只渲染其中一节，但右上角会显示冲突标签，并可在点击后弹出多节课程的详情。**
+In the versions prior to WePeiyang 3.0, the idea, in general, is this: First, design an algorithm to decide whether two given courses conflict or not. secondly, traverse all course arrangements and find all the possible "conflict course clusters." Then, for each cluster, render only one of them with a "conflict" label on it. When you tap such a labeled course block, all courses in this conflict course clusters appear in a popup modal.
 
-显然，这一冲突处理逻辑也只能解决以上第一种情形，而对交叠或包含关系的冲突课程无能为力。
-
-**目前，尽管这类特殊的冲突情形还很难触发，但当课程表引入自定义事件等扩展模块之后，此架构的表现不会很乐观。**
+**This model was able to get by most of the conflicts in the official course arrangement, but it does not allow us to scale.** Conceivably, as we introduce the "add your own events" feature in the near future, this algorithm would collapse.
 
 ### How to render conflicts?
 
 <figure>
     {% asset_img conf1.png %}
-    <figcaption>Fig. 一些渲染冲突的思路</figcaption>
+    <figcaption>Figure. Some conflict handling designs.</figcaption>
 </figure>
 
-微北洋 3.0 选择了舍弃涉及冲突的课程，只保留渲染其中一节的思路。这种思路已经不再适用于扩展架构。假设某天有一节 1-3 节和一节 2-4 节的冲突课程，而只渲染其中一节，那么会导致**本来有课的时间段再课程表上表现为空闲**。这违反了课程表的一条交互设计准则：「哪怕不去实现，也不要去误导用户」。
+WePeiyang 3.0 decided to use Solution III, an algorithm only capable of solving one specific type of conflict and doesn't satisfy the 4.0 requirements anymore. Suppose there were two overlapping course arrangements, one from 8 to 10 and another from 9 to 11. Using solution III, only one of them would be rendered. Although you can see the conflict details via the popup modal, the time slot in the schedule view would **still appear to be vacant though there were actual events**. This behavior violates one basic rule in our UX design guidelines - "Not implementing is better than misleading."
 
-部分软件，如 Android 平台上目前功能最为完备的日程可视化 App TimeTable++，选择了通过将冲突时段再分成多列，并在每列上并行渲染的方法。对于通用的日程可视化来说，这是值得考虑的稳妥方案之一，但严重牺牲了 UI 美观作为代价。此外，具体到微北洋的课程表显示，分成多列后过于狭窄的课程方块会变得几乎无法容纳课程名称。
+Some other apps, for instance, TimeTable++ on Android, chose to split the track and parallel-render those conflicting events (Solution II). This might be the optimal solution for general scheduling apps, but for WePeiyang 4.0, it severely reduces the already limited space and meanwhile sacrifices the UI appearance.
 
-最终，微北洋 4.0 选用了使用叠加渲染的思路。它的显著好处之一是不会破坏视觉的整齐和一致感。具体到开发中，此思路下需要解决的问题有两个：
-
-- 保证每个方块的课程名都可见
-- 保证任何一个冲突课程不会被完全叠住，导致无法被点击。
+At last, WePeiyang 4.0 adopted an overlay rendering solution (Solution I). One primary advantage of it is the good perseverance of the original visual elegance and consistency. Still, we need to solve two problems first. One is to ensure that all the course information is "exposed" (i.e., seeable). Also, we need to avoid overlapping one course with another completely in rendering and making it untappable.
 
 <figure>
     {% asset_img conf3.png %}
-    <figcaption>Fig. 本思路下对于不同冲突类型的渲染方案</figcaption>
+    <figcaption>Figure. How different categories of conflicts should be rendered for Solution I.</figcaption>
 </figure>
 
-对于第一个问题，我们可以通过赋予课程方块一定的透明度来解决。
+The first problem can be solved by giving the course blocks some translucency.
 
-在微北洋的整体视觉方案中，每一个课程有根据其学分 hash 出的固定颜色，在这里，我们指定学分越低的课程映射到更高透明度的颜色上，并保证所有颜色至少拥有 10% 不透明度：
+In the visual identity system designed for WePeiyang 4.0, each course has its hashed identity color. Here, we can assign a more transparent color to a course with more credits while ensuring the alpha value be no higher than 0.9.
 
 ```ts
 const defaultPalette = {
@@ -231,13 +226,9 @@ const defaultPalette = {
 }
 ```
 
-这一设计巧妙地利用了透明度与学分关联的特性。对于用户来说，学分越高的课程通常越重要，也意味着更高的优先级**。这保证了当多个课程发生冲突时，更重要的课程更醒目，更容易被清楚地看见。**
+This design utilized the nuanced connection between the importance of the course and the credits of it. For users, or at least from our students' experiences, we tend to care more about the courses with a higher number of credits, hence giving more priority. **By assigning the opacity this way, we can ensure that when several course arrangements conflict, the more important arrangement is more "salient," thus more noticeable in the schedule view.**
 
-而对于第二个问题，可以通过「对开始时间相同的一组冲突课程做**逐个位置偏移**」+「保证开始时间更晚的课程**总是渲染在上一层**」两个条件组合来达成。
-
-要满足第二个条件，只需保证计算每日课程的函数中，返回的数据根据课程开始时间排好序即可。
-
-要满足第一个条件 - 逐个位置偏移，逻辑实现如下。`crashIndex` 记录目前已经积累的开始时间相同的课程个数，对于第 $n$ 个这样的课程，渲染位置向下偏移 $20n$ 像素。凡是检测到下一个课程开始时间不再一样，则 `crashIndex` 清零。
+The second problem, on the other hand, is solved by a composition of "giving each of the courses in a conflict some **incremental offset/translation**" and "making sure the course **starts later** would be the course **rendered on the top**". The latter only requires the courses are sorted by start time. The former one can be tackled by the following code:
 
 ```jsx
 let crashIndex = 0
@@ -265,12 +256,15 @@ day.courses
   })
 ```
 
-至此，我们可以保证对于一开始提到的**四类课程冲突模式**，都可以实现正常渲染，且每一门冲突课程**可点击、课程名可视**，同时也实现了冲突发生时更重要的课程显示更醒目。
+In the above code snippet, `crashIndex` keeps track of the current accumulated courses with the same start time. For the $n$th of such a course, the render position will be translated by $20n$ pixels. Once a new course with a different start time is detected, `crashIndex` is reset to zero.
+
+At this point, we can appropriately render all four conflict types mentioned earlier. We ensured that all courses are visible, clickable, and the more critical courses appear more salient.
 
 <figure>
     {% asset_img conf4.png %}
-    <figcaption>Fig. 测试实现效果</figcaption>
+    <figcaption>Figure. Testing a course table replete with different types of conflicts.</figcaption>
 </figure>
+
 
 
 ## Dealing with Not-This-Week Courses
