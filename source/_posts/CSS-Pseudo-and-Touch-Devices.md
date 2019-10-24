@@ -27,7 +27,7 @@ Proper use of the `:hover` pseudo-state is important. It conveys information to 
 
 **The problem is, `:hover` is designed exclusively for desktop devices. Since 2007, smartphones and other touch devices became increasingly popular. Obviously, there are no corresponding actions for mouse hovering on touch devices.**
 
-Despite that, most of the browsers for touch devices eccentrically implemented hover state, and instead of mouse hovering, the trigger became a touch start event.
+Despite that, most of the browsers for touch devices implemented support for the hover state, but instead of mouse hovering, the trigger became a *touch start* event.
 
 To describe the behavior logic concretely:
 
@@ -35,16 +35,16 @@ To describe the behavior logic concretely:
 
 Here, the "stays until another element is pressed" behavior looks somewhat identical to another pseudo-state `:focus`, which also loses its active status on another touch event start. And this period of stay is the topic of this article - **Sticky Hover**.
 
- 
+
 ## STICKY-HOVER
 
-**也许有个人的感情色彩，但 sticky-hover 是一个非常讨厌的现象。**
+**There may be personal feelings, but sticky-hover can be anathema in user experiences.**
 
-我们在点按一个按钮并抬起时，总是希望这一动作是干脆、利落地完成，而粘滞的 `:hover` 样式会给人上一个动作还未做完的感觉。屏幕上留下的粘滞样式，让人感觉心情不适，很影响视觉体验。
+When we tap a button and lit our fingers, we always hope that the action is instant and clear-cut. Such a sticky style, however, gives the impression that the action has not been done yet. The active style persists on the screen and continues to disturb users' visual experiences.
 
-许多用户所感受到的「移动端 Web 不如 Native 应用交互舒服」，一个重要的因素便是 Web 在移动端表现的粘滞悬停。[在 StackOverflow 上，也有过关于如何禁用移动端粘滞悬停的讨论](https://stackoverflow.com/questions/23885255/how-to-remove-ignore-hover-css-style-on-touch-devices)。
+The common feeling of "web apps are inferior to native apps in terms of user experience" can be partially ascribed to sticky hovers. On StackOverflow, there have also been [discussions](https://stackoverflow.com/questions/23885255/how-to-remove-ignore-hover-css-style-on-touch-devices) on how to disable this specific behavior.
 
-事实上，在 W3C 制定相关标准时，也并未表现过支持这种处理方式的态度。以下是[标准中关于 CSS 动态伪类的定义性解释](https://www.w3.org/TR/selectors-3/#sel-active)：
+In fact, when W3C developed relevant web standards, it did not show any positive attitude of such interaction logic. The following is a definitive explanation of the CSS dynamic pseudo-classes in [the standard drawn by W3C](https://www.w3.org/TR/selectors-3/#sel-active):
 
 > Interactive user agents sometimes change the rendering in response to user actions. Selectors provides three pseudo-classes for the selection of an element the user is acting on.
 >
@@ -54,17 +54,17 @@ Here, the "stays until another element is pressed" behavior looks somewhat ident
 >
 > The :focus pseudo-class applies while an element has the focus (accepts keyboard or mouse events, or other forms of input).
 
-在解释 `:hover` 伪类适用的激活范围时，W3C 特意指出：**在某些不支持悬停侦测的交互模式下，如一台使用触控笔交互的设备，这一伪类无法被支持。**而手指触屏和笔触屏本质上是相同的，因此一台符合标准的设备 (Conforming user agent) 不应当实现 `:hover` 的状态激活。
+Notice that when defining the trigger for the `:hover` pseudo-state, W3C explicitly pointed out that **user agents that do not support hovering interaction (e.g., a pen device that does not detect hovering) do not have to support this pseudo-class as well**. Here, touch devices are essentially the same as the pen device example. Therefore, a conforming user agent should not implement the trigger of `:hover` pseudo-state if they comply with the standard.
 
-但为何所有的触控浏览器实现厂商，都不约而同地违反这一标准呢？
+But why do all touch browser implementation vendors violate this standard in the same way?
 
-我能够想到的一个原因，即使样式表现的完备性 (completeness)。
+The one reason that I can come up with is *style completeness* in all its possible behaviors.
 
  
 
 ## STYLES COMPLETENESS
 
-我们仍然假设一个 button，分别具有常态、`:hover` 激活和 `:active` 激活三种不同的样式表现：
+Let's use the button introduced earlier in the article. Suppose it has three states: the normal state, the `:hover` state and the `:active` state, each with a different style declaration.
 
 ```css
 button {
@@ -80,29 +80,27 @@ button:active {
 }
 ```
 
-很明显，在键鼠控制的传统 Web 浏览设备中，button 具有三层样式，分别是常态、`:hover` 激活、`:hover` 和 `:active` 同时激活：
+Apparently, in a traditional desktop device controlled by mouse, the button can display three distinctive style combinations, i.e., the normal style, the style with 0.9 opacity and with 0.9 opacity plus a scaling transform:
 
 <figure>
-    {% asset_img states1.png Fig 1 – 传统 Web 浏览中的三层样式 %}
-    <figcaption></figcaption>
+    {% asset_img states1.png %}
+    <figcaption>
+Figure 1. The interaction logic on a traditional device.</figcaption>
 </figure>
+These three style combinations are all the *expected styles* in this particular software development requirements. That is, **the developer wants all these three appearances *can* / *have a chance to* be activated, and we do not need any other possible combinations.**
 
-这三层样式是传统 Web 开发者对一个元素的全部「期待样式 (expected styles)」：即**我希望这三种样式都可以被激活，不需要其它可能的组合被激活。**
-
-如图中可见，这三种样式状态可以被鼠标悬停进入 (mouseOver)、鼠标按下 (mouseDown)、鼠标抬起 (mouseUp) 和鼠标移出 (mouseOut) 等时间分离开来。
+As shown in figure 1, on a traditional device, the stage of these three appearances can be separated by interactive behaviors including `mouseOver`, `mouseDown`, `mouseUp`, and `mouseOut`.
 
 ### W3C STANDARD
 
-在 W3C 标准中，如果真的完全移除对 `:hover` 伪类的支持，那么触屏设备上可能触发的样式集合只剩下**两种**，从而不具备这种完备性：
+On a touch device, if you comply with the W3C standard which discourages you from implementing support for a `:hover` trigger, then the number of possible style combinations would be reduced to 2, losing its original style completeness:
 
 <figure>
     {% asset_img states2.png %}
-    <figcaption>Fig 2. W3C 标准下的触屏设备交互实现</figcaption>
+    <figcaption>Figure 2. The interaction logic on a touch device under the W3C standard.</figcaption>
 </figure>
 
-如果说仅仅对于样式上完备性未满足产生的折扣尚且可以忍受，那么功能上的呢？
-
-事实上，`:hover` 伪类在 Web 上除去样式外确实存在一定功能触发作用。如：
+In this case, the problem only affects the completeness of visual styles - we can't feel a translucent button anymore. In other cases, however, `:hover` is sometimes connected to necessary functional triggers. For instance:
 
 ```css
 nav .menu {
@@ -114,82 +112,74 @@ nav:hover .menu {
 }
 ```
 
-如此实现是否优雅得体，我们尚且搁置。但现在的 Web 上，确实有很多类似的写法存在：你需要鼠标悬停某一处，才可以展开一个特定的菜单或是触发其它视图。
+Let aside whether this implementation is a good UX design pattern, it's an undeniable truth that many websites currently rely on such hovering triggers for things to work: You have to hover your mouse on someplace to expand the menu.
 
-如果 `:hover` 伪类彻底不被实现，那么网站在该设备上的功能就是**不健全**的。这一点在当时，对于触屏设备这种新生事物，显然无法忍受。
+If `:hover` pseudo-state is not implemented or supported by the browsers, conceivably, they will lose market shares. At times when touch screens are relatively new technology, the most urgent requirement for them is to ensure as many sites to function correctly on their web browser as possible.
 
-在完备性没有得到保证之外，该模式还存在一个问题，即它可能会触发一个预料外样式 (unexpected style)：`:active` 被激活而 `:hover` 未被激活。具体到本例中，即是 button 不透明但却被放大到 1.1 倍的样式。
+The other problem in this model is some appearance *unexpected* might happen - the combination where the `:active` state is triggered but not the `:hover` state. Either on a traditional device or in the web developer's initial expectation, you can't find a magnified button with opacity set to 100%. Here, you will.
 
-我们知道，由于在桌面设备下 `:active` 总是在 `:hover` 已激活的情况下才会激活，所以这一样式是开发者未预料到的。
-
-这并非一个太大的问题，但它确实是存在且可能产生影响的。
+This is a minor problem, but it sure may still cause potential inconveniences. Besides, unexpected behaviors should always be regarded as dangerous in computer science.
 
 ### CONVENTION
 
-因为上述的这些问题，才有了今天触屏设备在惯例上对 `:hover` 的支持和触发逻辑：
+For the issues above, an unorthodox interaction logic appeared and persisted, becoming the status quo:
 
 <figure>
     {% asset_img states3.png %}
-    <figcaption>Fig 3. 触屏设备的惯例实现</figcaption>
+    <figcaption>Figure 3. The current interaction logic convention on touch devices.</figcaption>
 </figure>
 
-在这种模式中，样式保持了传统 Web 中三层样式的完备性，即所有的期待样式均可被触发，同时又没有未期待的样式被触发。它是完备的，没有疑问；但它同时又是丑陋的，因为这样处理将产生不可避免地粘滞性悬停（如图），影响交互体验。
+
+In this scheme, all three style combinations are preserved, ensuring the style completeness. It's a safe solution, without a doubt, but it's nonetheless ugly and disturbing. This scheme is the source cause of the sticky hover problem that we're discussing today. Is there any other option?
 
 ### A THIRD OPTION?
 
-事实上，除去以上两种处理方案之外，还有一种可能：
+Indeed, apart from all the options mentioned above, there is another:
 
 <figure>
     {% asset_img states4.png %}
-    <figcaption>Fig 4. 另一种可能</figcaption>
+    <figcaption>Figure 4. Another option.</figcaption>
 </figure>
 
-这一种模式与 W3C 标准只有一处不同，即它规定了 `:hover` 必须和 `:active` 同步触发、同步结束。
+Notice there is only one difference from the W3C standard. Here, the `:hover` and `:active` states are always simultaneously triggered and deactivated. There is also only one difference from the current convention - the stage that causes the sticky hover effect is removed.
 
-它和目前惯例采用的模式也只有一处不同，即移除了形成粘滞性悬停的阶段。
+If mitigates the visual discomfort and eliminates unexpected styles, however, it still lacks style completeness. You can't get the `:hover` style activated solely, and it's difficult to retain the `:hover` state.
 
-它解决了视觉上不适的问题，显然。此外，它也解决了 W3C 标准中「预料外样式」的问题。
-
-但它还是缺少完备性，即用户没有办法控制 `:hover` 单独出现。而且，用户也没有对 `:hover` 状态进行保持的方便性 —— 如在前面举过的 nav – menu 例子中，用户只能在手指按住 nav 的同时选取 menu。
-
-看起来操作很别扭！
+Why should this be the solution?
 
 ## MY CHOICE
 
-事实上，第三种方案是我在开发中更加倾向的方案。
+The third option is the option that I use in my development.
 
-确实，从整个 Web 生态看来，可能它存在的问题比如今浏览器采用的模式更大。但对于个人和团队新开发的项目，如果应用一定的交互设计理念和标准，便可以将它的影响缩至最小。
+One thing needs to be clear. The optimal solution for the browsers' implementation is not necessarily the same as the optimal solution for a modern web app developer. From the perspective of looking after the whole existing web library, coming to this solution is not better than the status quo - It would break a lot of websites. On the other hand, if you are working on a new project, by adopting certain UX principles and guidelines, the negative influence can be circumvented.
 
-首要的一点，便是页面中最好不要有上文中 nav – menu 例子中的悬停显示交互模式。虽然有人喜欢，但我个人是反感这种交互逻辑的。
+**One principle that I believe in is the pattern of hovering nav-menu mentioned above should be avoided.** Although it used to prevail, I would frown this interactive design pattern.
 
-最常见的悬停显示，是 Windows 旧版本的开始菜单。**为了进入下一级菜单，你需要持续将鼠标悬停在本级菜单的选项中，小心翼翼地平移过去。**如果你使用触控板，甚至会比用鼠标小心地移动更加痛苦。
+The most common hovering menu activation is the Start Menu on some legacy Windows versions. To enter the next level of the menu, you need to continuously hover your mouse over the options in this level menu and carefully pan over. If you use the trackpad, it's even more painful to move cautiously without accidentally leaving the track.
 
-这种交互模式的设计初衷可能是为了省下一次点击，但事实证明，**一次点击所带来的交互代价相比谨慎的移动操作，是微乎其微的。**
+**This interactive pattern was designed to save a single click. Yet, history tells us that "carefully staying on the hovering track" costs significantly more than a single click.** If the hovering track area were broad enough, then the situation probably wouldn't be so bad. But such a pattern often accompanies limited design space - after all, if there were abundant space, why don't designers just put all menus simultaneously visible on the screen?
 
-如果悬停元素的面积足够大或许还好，但这种叠式布局出现的意义，就是为了节省空间。
-
-[京东](http://jd.com/)的主页分类栏目中，所运用的就是这种交互。它们现在仍然在采用，但为了弥补其缺陷，团队写了大量的、复杂的 JS 代码用于判定用户鼠标轨迹的特征，从而推测用户意向。如图所示，当用户从一级菜单中径直、快速地指向二级菜单时，尽管划出了一级菜单允许的悬停区域，显示的内容仍然不会发生改变。
+Though this pattern has seen a decline in usage, some UX designers have been working hard trying to improve it. On the home page of [JD.com](http://jd.com/), the second-largest e-commerce site in Mainland China, we can still observe the presence of such a pattern. To offset its defects, however, a large amount of JavaScript code was written to predict the user's next move by analyzing the mouse trace. As seen in figure 5, when a user straightly moves their mouse from the top-level menu to the secondary menu on the right, although the mouse left the track during this movement, the content on the right would not unstably flash.
 
 <figure>
     {% asset_img jd.png %}
-    <figcaption>Fig 5. 京东主页的悬停显示交互</figcaption>
+    <figcaption>Figure 5. The "improved" hovering activated menu pattern used on JD.com.</figcaption>
 </figure>
 
-但是这样做完全不简洁，且不足够优雅。无论怎么写推测用户意向的逻辑，总是会有误判的情况。
+Despite all the efforts, no solution for this pattern could be both simple, elegant, and precise. No matter how complex and sophisticated the prediction algorithm is designed, misjudgment can happen.
 
-悬停的 `:hover` 作用，应该是样式在常态和 `:active` 状态下的过渡。依赖于悬停交互展开菜单的功能，很可能本身就不是好的交互模式。
+The best use of `:hover` pseudo-states, from a modern web design view that fits both desktop and touch devices, should only be the *style* transition that provides proper visual feedback instead of doing anything *functional* imperative. Relying on hovering to trigger a menu itself probably would not be a good idea.
 
-对于其它的悬停功能，如 Tooltip 等，在此种方案下保留了和惯例模式一样的表现，即长按时触发 —— 虽然在移动端，Tooltip 本身也不是理想的交互组件。
+Other functions that rely on hovering states, e.g., tooltips, are preserved and can be appropriately activated. A long press would do the work. But notice that tooltips are not ideal interactive components on mobile devices as well.
 
- 
+
 
 ## CONCLUSION
 
-在 Web 开发领域，前端背负的历史包袱是多而重的。
+In web development, The historical burden that a browser carries is often onerous. Bad or incorrect designs in HTML, CSS, and JavaScript standards must be preserved to make sure old sites function properly. `border-box` in CSS and `typeof null` in JavaScript are all good examples for that. We should, therefore, understand the compromises that they had to make.
 
-版本的迭代必须保证以往的所有 Web 页面正常运行，因此，现在的 Web 标准存在许多永久性的妥协。CSS 的 `border-box`，和 JavaScript 中的 `typeof null`，都是很典型的例子。而文中所讨论的触屏设备交互逻辑适配，实质也是一种妥协。
+The developers, on the other hand, should actively seek new possibilities that may provide better solutions. It's important for us to realize that we don't have to always "keep in sync" with the browsers. 
 
-**好消息是，现在 Web 前端似乎比任何一个 IT 技术领域都更具有活力。**
+> It's like we've forgotten who we are, Donald. <br />Explorers. Pioneers. Not caretakers.
 
-我们有理由寄希望于 Web 社区，为这些历史遗留问题，不断带来更加优雅、健壮的解决方案。
-
+—— Joseph A. Cooper, *Interstellar*, 2014
