@@ -36,11 +36,11 @@ To describe the behavior logic concretely:
 Here, the "stays until another element is pressed" behavior looks somewhat identical to another pseudo-state `:focus`, which also loses its active status on another touch event start. And this period of stay is the topic of this article - **Sticky Hover**.
 
 
-## STICKY-HOVER
+## STICKY HOVER
 
-**There may be personal feelings, but sticky-hover can be anathema in user experiences.**
+**There may be personal feelings, but sticky hover can be anathema to user experience.**
 
-When we tap a button and lit our fingers, we always hope that the action is instant and clear-cut. Such a sticky style, however, gives the impression that the action has not been done yet. The active style persists on the screen and continues to disturb users' visual experiences.
+When we tap on a button and then lift our fingers, we always hope that the action is instant and clear-cut. Such a sticky style, however, gives the impression that the action has not been done yet. The active style persists on the screen and continues to disturb users' visual experiences.
 
 The common feeling of "web apps are inferior to native apps in terms of user experience" can be partially ascribed to sticky hovers. On StackOverflow, there have also been [discussions](https://stackoverflow.com/questions/23885255/how-to-remove-ignore-hover-css-style-on-touch-devices) on how to disable this specific behavior.
 
@@ -54,7 +54,7 @@ In fact, when W3C developed relevant web standards, it did not show any positive
 >
 > The :focus pseudo-class applies while an element has the focus (accepts keyboard or mouse events, or other forms of input).
 
-Notice that when defining the trigger for the `:hover` pseudo-state, W3C explicitly pointed out that **user agents that do not support hovering interaction (e.g., a pen device that does not detect hovering) do not have to support this pseudo-class as well**. Here, touch devices are essentially the same as the pen device example. Therefore, a conforming user agent should not implement the trigger of `:hover` pseudo-state if they comply with the standard.
+Notice that when suggesting the trigger for the `:hover` pseudo-state, W3C explicitly pointed out that **user agents that do not support hovering interaction (e.g., a pen device that does not detect hovering) do not have to support this pseudo-class as well**. Here, touch devices are essentially the same as the pen device example. Therefore, a conforming user agent should not implement the trigger of `:hover` pseudo-state if they comply with the standard.
 
 But why do all touch browser implementation vendors violate this standard in the same way?
 
@@ -100,7 +100,7 @@ On a touch device, if you comply with the W3C standard which discourages you fro
     <figcaption>Figure 2. The interaction logic on a touch device under the W3C standard.</figcaption>
 </figure>
 
-In this case, the problem only affects the completeness of visual styles - we can't feel a translucent button anymore. In other cases, however, `:hover` is sometimes connected to necessary functional triggers. For instance:
+In this case, the problem only affects the completeness of *visual* styles - we can't feel a translucent button anymore. In other cases, however, `:hover` is sometimes connected to necessary *functional* triggers. For instance:
 
 ```css
 nav .menu {
@@ -116,13 +116,13 @@ Let aside whether this implementation is a good UX design pattern, it's an unden
 
 If `:hover` pseudo-state is not implemented or supported by the browsers, conceivably, they will lose market shares. At times when touch screens are relatively new technology, the most urgent requirement for them is to ensure as many sites to function correctly on their web browser as possible.
 
-The other problem in this model is some appearance *unexpected* might happen - the combination where the `:active` state is triggered but not the `:hover` state. Either on a traditional device or in the web developer's initial expectation, you can't find a magnified button with opacity set to 100%. Here, you will.
+The other problem in this model is some *unexpected* appearances might happen - the combination where the `:active` state is triggered but not the `:hover` state. Either on a traditional device or in the web developer's initial expectation, you can't find a magnified button with opacity set to 100%. Here, you will.
 
 This is a minor problem, but it sure may still cause potential inconveniences. Besides, unexpected behaviors should always be regarded as dangerous in computer science.
 
 ### CONVENTION
 
-For the issues above, an unorthodox interaction logic appeared and persisted, becoming the status quo:
+Due to the issues in the W3C standard, an unorthodox interaction logic appeared and persisted, becoming the status quo:
 
 <figure>
     {% asset_img states3.png %}
@@ -143,17 +143,17 @@ Indeed, apart from all the options mentioned above, there is another:
 
 Notice there is only one difference from the W3C standard. Here, the `:hover` and `:active` states are always simultaneously triggered and deactivated. There is also only one difference from the current convention - the stage that causes the sticky hover effect is removed.
 
-If mitigates the visual discomfort and eliminates unexpected styles, however, it still lacks style completeness. You can't get the `:hover` style activated solely, and it's difficult to retain the `:hover` state.
+It mitigates the visual discomfort and eliminates unexpected styles, however, it still lacks style completeness. You can't get the `:hover` style activated solely, and it's difficult to retain the `:hover` state.
 
-Why should this be the solution?
+So, what's good about this solution?
 
 ## MY CHOICE
 
-The third option is the option that I use in my development.
+The third option is the solution that I use in my development.
 
 One thing needs to be clear. The optimal solution for the browsers' implementation is not necessarily the same as the optimal solution for a modern web app developer. From the perspective of looking after the whole existing web library, coming to this solution is not better than the status quo - It would break a lot of websites. On the other hand, if you are working on a new project, by adopting certain UX principles and guidelines, the negative influence can be circumvented.
 
-**One principle that I believe in is the pattern of hovering nav-menu mentioned above should be avoided.** Although it used to prevail, I would frown this interactive design pattern.
+**One principle that I believe in is the interactive design pattern of hovering nav-menu mentioned above should be avoided.** Although it used to prevail, I would frown this pattern.
 
 The most common hovering menu activation is the Start Menu on some legacy Windows versions. To enter the next level of the menu, you need to continuously hover your mouse over the options in this level menu and carefully pan over. If you use the trackpad, it's even more painful to move cautiously without accidentally leaving the track.
 
@@ -176,9 +176,9 @@ Other functions that rely on hovering states, e.g., tooltips, are preserved and 
 
 ## CONCLUSION
 
-In web development, The historical burden that a browser carries is often onerous. Bad or incorrect designs in HTML, CSS, and JavaScript standards must be preserved to make sure old sites function properly. `border-box` in CSS and `typeof null` in JavaScript are all good examples for that. We should, therefore, understand the compromises that they had to make.
+In web development, The historical burden that a browser carries is often onerous. Bad or incorrect designs in legacy HTML, CSS, and JavaScript standards must be preserved to make sure old sites function properly. `border-box` in CSS and `typeof null` in JavaScript are all good examples for that. We should, therefore, understand the compromises that they had to make.
 
-The developers, on the other hand, should actively seek new possibilities that may provide better solutions. It's important for us to realize that we don't have to always "keep in sync" with the browsers. 
+The developers, on the other hand, should actively seek new possibilities that may provide better solutions. It's important for us to realize that we don't have to always "keep in sync" with the browser specifications. 
 
 > It's like we've forgotten who we are, Donald. <br />Explorers. Pioneers. Not caretakers.
 

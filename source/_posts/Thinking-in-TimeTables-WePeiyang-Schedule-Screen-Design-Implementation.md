@@ -106,7 +106,7 @@ Design the following algorithm:
 $$
 h_{r}=(h_{m}+\dfrac {h_{s}p}{18-n})N
 $$
-Where $h_{r}$ represents the overall rendered height, $h_{s}$ is the current window height returned from `Dimensions.get()`, $p$ represents the scale coefficient designated by users, $h_{m}$ stands for the margin heights, and $n$ stands for the displayed days each week. $N$ is the number of course slots each day, which constant equals 12.
+Where $h_{r}$ represents the overall rendered height, $h_{s}$ is the current window height returned from `Dimensions.get()`, $p$ represents the scale coefficient designated by users, $h_{m}$ stands for the margin heights, and $n$ stands for the displayed days each week. $N$ is the number of course slots each day, which identically equals to 12.
 
 ```jsx
 // For height, you need to specify height of a single component,
