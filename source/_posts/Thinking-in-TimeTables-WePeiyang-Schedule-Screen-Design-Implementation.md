@@ -11,8 +11,9 @@ To me, however, the hardest part is "how to advance a further step." WePeiyang i
 
 <figure>
     {% asset_img wpy3.png %}
-    <figcaption>Fig. Schedule Module of WePeiyang 3.0</figcaption>
+    <figcaption>Figure. Schedule Module of WePeiyang 3.0</figcaption>
 </figure>
+
 
 No more story-telling here. In the following pages, I will briefly describe the problems encountered in the requirement, design and development stages, and give an idea about how I managed to solve them.
 
@@ -24,8 +25,9 @@ Although the development process didn't start until June 2019, the origin of WeP
 
 <figure>
     {% asset_img design-all.png %}
-    <figcaption>Fig. The conceptual design proposal from Owlling. Only a portion of all layouts required was implemented.</figcaption>
+    <figcaption>Figure. The conceptual design proposal from Owlling. Only a portion of all layouts required was implemented.</figcaption>
 </figure>
+
 
 The "daily schedule" component in the home screen is essentially a horizontal `ScrollView`. Inside the view, all courses arranged today are shown linearly. Each course has an identity color, and each `CourseBlock` is essentially a rounded rectangle showing course information with a background of that color.
 
@@ -39,8 +41,9 @@ Dotmap is a component that tells users how their time is occupied. It is introdu
 
 <figure>
     {% asset_img dotmap2.png %}
-    <figcaption>Fig. The Dotmap abstracts the full schedule into a... well, dot map.</figcaption>
+    <figcaption>Figure. The Dotmap abstracts the full schedule into a... well, dot map.</figcaption>
 </figure>
+
 
 In WePeiyang 3.0, the Dotmap is a fixed 5×5 matrix, which means they can have hard-coded dot margin and component size. In WePeiyang 4.0, however, one notable feature is the variability and flexibility of course tables. Users are given choices on determining how many days they want to show each week. While most students have courses arranged between workdays, some of them need to take classes on weekends. If they choose to display from Monday to Sunday, inclusive, then the Dotmap should be of 7×5 size.
 
@@ -75,8 +78,9 @@ Runtime screenshots:
 
 <figure>
     {% asset_img dotmap.png %}
-    <figcaption>Fig. The Dotmap that can handle even 15 days a week at ease.</figcaption>
+    <figcaption>Figure. The Dotmap that can handle even 15 days a week at ease.</figcaption>
 </figure>
+
 
 
 
@@ -218,10 +222,8 @@ const defaultPalette = {
     rgba(x, y, z, 0.7),
     rgba(x, y, z, 0.6),
     rgba(x, y, z, 0.45),
-  ].map(c =>
-    Color(c)
-      .fade(0.1)
-      .toString(),
+  ].map(
+    c => Color(c).fade(0.1).toString(),
   )
 }
 ```
@@ -269,42 +271,44 @@ At this point, we can appropriately render all four conflict types mentioned ear
 
 ## Dealing with Not-This-Week Courses
 
-非本周课程指那些在其它周有安排，而本周尚未开课的课程。
+Not-This-Week courses are courses arranged in other weeks. So, should we display them in the current week?
 
-微北洋显示非本周课程由来已久。它们被设计为浅灰色的课程方块，并附加了非本周的标签提示。显示这些课程看起来似乎不是太艰巨的任务，但在尝试设计实现其逻辑时， 我们遇到了一些困难。具体来说：**假设每周五第一节在 2-8 周有课程 A，在 9-16 周有课程 B，那么在第一周时，那里应该渲染非本周课程 A 还是课程 B？**
+WePeiyang has a long history of displaying not-this-week courses. They were rendered as light grey boxes with a "not-this-week" ribbon in the corner. **Implementing them seems quite easy, but no.** Just to illustrate an example: suppose course A is arranged in week 2-8, course B is scheduled at the same time slot but in week 9-16. What do we display in that time slot when the current week is week 1, course A or course B?
 
-微北洋 3.0 的代码逻辑似乎没有太在意这一点，具体测试时，它表现为选择靠后的其中一节显示。这似乎不太优雅。
+When I investigated code in WePeiyang 3.0, it seems that they didn't specifically handle this case - it will just display one of them and abandon all other not-this-week courses. Not an elegant solution.
 
-更棘手的问题在后面：**假设课程 A 和课程 B 有交叠或包含关系，应该如何渲染？如果某个时间段拥有三节或者更多节课程包括了交叠、包含和重叠等多种关系，又应该如何渲染？**
+The problem gets knotty when we consider overlapping conflicts. What if courses A and B are partially overlapping? What if three or more courses are engaged in this conflict?
 
 <figure>
     {% asset_img not-this-week.png %}
-    <figcaption>Fig. 渲染非本周课程的难题</figcaption>
+    <figcaption>Figure. The problem regarding not-this-week courses.</figcaption>
 </figure>
-*非本周课程也可能会互相产生冲突。*此时，仅显示其中靠后的一节已经行不通了 —— 这不再只是不优雅的问题，而是 misleading。
 
-同样地，虽然目前的微北洋拥有这个问题，但毕竟属于不常见情况，也许还未引起用户的注意，但当自定义事件引入后，这一问题也将同样变得不可忽视。
+That's right. *Not-this-week courses can conflict with themselves, too.* When this happens, it makes no sense to display only one of them. It's not even a problem of anti-elegance. It's misleading.
 
-在解决冲突之前，我们对此问题提出的唯一可行解决方案是这样的：
+Similarly, while the current WePeiyang suffers from this issue, they are not widely triggered or noticed since such a form of conflict is not common. And again, after we introduce the custom events feature, we can't just get by anymore. We need a new model.
 
-> 计算出那些在*每一周*都无安排的时间段 $L$，取其补集，得到*可能有*非本周课程的所有时间段 $\overline{L}$。在渲染正常课程时，同时渲染 $\overline{L}$ 所包含的时间段在下一层，标记为「非本周可能有课」。至于具体哪个时间段在非本周可能有那些课，则完全无法判定，因为**引入自定义事件后每周的交叠空闲时间段是不定形的**。
+Before we came up with the conflict handling model, the only way to solve it is like this:
 
-这一解决方案将带来庞大的代码量，和更加难以让后人维护的渲染逻辑。我们几乎将要放弃渲染非本周课程，但在设计完正常课程的冲突渲染方案后，我们意识到重叠渲染也可以应用到非本周课程上。不同的是，非本周课程无需再根据冲突处理位置偏移，因为它们本来便是不可点击的。
+> Calculate the time slots $L$ that are vacant every week. Its complement $\overline{L}$ then represents the time slots that have at least one not-this-week course occupied. When rendering regular courses, render all those $\overline{L}$ time slots in the layer beneath, tag them as "Possible not-this-week courses are located here." As for which time slot corresponds with what specific course, logically, we can't decide, because the overlapping conflicts are making these vacant time slots amorphous.
 
-这样一来，似乎还算优雅地处理掉了面临的问题：不会再出现 misleading 的空闲时间，同时保证了在大多数固定课时的情况下非本周课名的正常显示。
+This solution, though theoretically feasible, brings a tremendous amount of code and rendering logic that is more difficult for future generations to maintain. We are almost about to give up rendering not-this-week courses altogether. After designing the conflict rendering scheme for the regular courses, we realized that this scheme could also be applied to not-this-week courses. The difference is that there is no need to handle positional offsets for them because they are inherently unclickable by design.
+
+This reuse solves the problem at a relatively low cost. No more misleading vacancies, and the not-this-week courses can be rendered with names.
 
 <figure>
     {% asset_img not-this-week-2.png %}
-    <figcaption>Fig. 解决方案：无需再处理冲突的重叠渲染</figcaption>
+    <figcaption>Figure. The solution for displaying not-this-week courses.</figcaption>
 </figure>
 
-当然，由于「非本周」课程的显示本身就是课程表的 anti-pattern，我们也为用户们提供了不显示非本周课程的选项。如果此项被勾选，那么在课程表的空闲日，会从 Google Material Icons 中随机挑选一个 Icon 作为建议的课余活动，渲染到当天的日程中。
+
+In my personal view, however, displaying not-this-week arrangements itself is an anti-pattern for time tables. Implementing it here is only to take care of users' existing habits; so, we provided the option *not* to display such courses. Enabling this would mark the vacant days (according to only the current week's arrangement) with a random activity icon instead of marking the not-this-week courses.
 
 
 
 ## Caching
 
-由一个课程安排生成每学期的详细课表的函数 `getFullSchedule()`，需要对学期的每一天调用 `getCoursesByDay()`。这两个函数都是整个微北洋 App 中相当复杂的函数：
+The function `getFullSchedule()` calculates the schedule for each week in the current semester. It invokes `getCoursesByDay()` for each day in the semester. These two are relatively complicated functions even on the whole WePeiyang app scale.
 
 ```jsx
 export const getFullSchedule = (data, daysEachWeek) => {
@@ -342,7 +346,6 @@ export const getFullSchedule = (data, daysEachWeek) => {
       occupiedIndex,
     })
   }
-  console.log("Full schedd", weeks)
   return weeks
 }
 
@@ -356,16 +359,16 @@ export const getCoursesByDay = (timestamp, data) => {
       let dayOfWeek = now.getDay()
       if (arrangement.day === "7") arrangement.day = "0"
       if (Number(arrangement.day) === dayOfWeek) {
-        // 星期几符合
+        // The day of the week is correct
         if (course.week.start <= currentWeek && currentWeek <= course.week.end) {
-          // 在开始结束周数之内
+          // Within start and end date
           if (
             !(
               (arrangement.week === "单周" && currentWeek % 2 === 0) ||
               (arrangement.week === "双周" && currentWeek % 2 === 1)
             )
           ) {
-            // 没有被卡单双周
+            // And not limited by week patterns
             // Arranged this week!
             res.push({
               ...course,
@@ -374,7 +377,7 @@ export const getCoursesByDay = (timestamp, data) => {
             })
           }
         } else {
-          // 符合显示非本周课程定义
+          // This is a not-this-week course
           res.push({
             ...course,
             activeArrange: arrangement,
@@ -384,8 +387,6 @@ export const getCoursesByDay = (timestamp, data) => {
       }
     })
   })
-  // 额外一步检查：是否选定的"非本周"课程中，有无和本周课程当天时间安排完全一样的？
-  // 如果有，应当去除，因为它会完全和本周课程重叠绘制，从而无需绘制
   res = res.filter(course => {
     if (!course.thisWeek) {
       for (let i = 0; i < res.length; i++) {
@@ -401,7 +402,7 @@ export const getCoursesByDay = (timestamp, data) => {
     }
     return true
   })
-  // 排序结果，保证开始时间靠后的课程总是后渲染，避免重叠或冲突课程时，先渲染的课程被完全覆盖而无法触发点按
+  // Sort the courses by start time, so that in rendering, the course starts later is rendered later, and no course will be completely overlapped
   res.sort((a, b) => {
     return a.activeArrange.start - b.activeArrange.start
   })
@@ -409,9 +410,9 @@ export const getCoursesByDay = (timestamp, data) => {
 }
 ```
 
-`getFullSchedule()` 是一个昂贵的操作，它具有以学期天数、学期总课程数和每个课程的时间安排数为底的三次多项式复杂度（我们显然可以设计更高效的算法，但遍历每日的安排，保证了自定义事件模块的可拓展性）。如果每次进入课程表界面都需重新计算一遍详细课表，用户在进入课表时会感受到明显的卡顿。
+Due to the fact that `getFullSchedule()` is a costly operation with a cubic polynomial complexity (We could have designed a more efficient algorithm, but the current one allows us to scale up for a custom event module), if we run this function every time a user enters the schedule view, the performance would suffer.
 
-因此，缓存是必要的。
+Therefore, caching is necessary.
 
 ```jsx
 if (course.generated && course.generated[0].days.length === daysEachWeek) {
@@ -424,14 +425,14 @@ if (course.generated && course.generated[0].days.length === daysEachWeek) {
 }
 ```
 
-像这样。详细课表将在首次生成后被存储在 Redux Store 中，并使用 `redux-persist` 实现持久化。
+The above code stores the generated schedule details in the Redux Store, and then use `redux-persist` to persist the data.
 
-同时，`getFullSchedule()` 的逻辑被写进了通过网络请求获取课表的逻辑，意味着如果用户通过下拉刷新的方式尝试获取新课表，那么这一耗费性能的操作将会重新运行一遍，以保证数据的一致性 —— 这看起来还好，因为网络请求显然比计算课表更加昂贵，因此刚好可以忽略不计。
+Meanwhile, the `getFullSchedule()` is invoked as well when users attempt to refresh the data from remote servers to ensure data integrity and consistency. This costly action can be safely omitted here because the network request is usually more time-consuming than local computation.
 
 
 
 ## Afterwords
 
-在开发（广义的）前端界面时，一些对人类行为习惯和认知的理解，一些对生活的观察，和解决实际问题的算法，很可能比一个优化到极致的高效算法更加重要。
+When developing user interfaces, some observations from life, motivation to solve real-world problems, and an adequate understanding of how human behaviors work, can weigh more than an ultimately optimized algorithm.
 
-我们不会只需要精通 C++、熟背各种数据结构，日常同指针、队列和链表打交道的工程师。这个世界上还有很多问题需要解决。我相信每个问题都有它的位置。
+Software engineering is a complex subject. We do not only need computer scientists proficient in C++ and data structures. There are all kinds of problems in this world waiting for us to solve, and I believe every one of them has its value.
