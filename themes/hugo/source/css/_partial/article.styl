@@ -1,4 +1,17 @@
+@keyframes breathe {
+  0%,
+  50%,
+  100% {
+    opacity: 0.9;
+  }
+  25%,
+  75% {
+    opacity: 0.3;
+  }
+}
+
 article
+
   header
     .posttitle
       margin-top: 50px
@@ -28,6 +41,11 @@ article
       display: inline
 
   .content
+    a
+      transition: all .4s
+    a:hover
+      animation: breathe 6s infinite both;
+
     h2:before
       position: absolute
       top: -4px
