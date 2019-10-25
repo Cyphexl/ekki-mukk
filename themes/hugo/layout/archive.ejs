@@ -11,7 +11,7 @@
     <h2><%= year %></h2>
     <% } %>
     <li class="post-item">
-      <span class="post-title hugo-h3"><%- partial('_partial/post/title', { post: post, index: true, class_name: '' }) %></span>
+      <span class="post-title hugo-h3"><%- partial('_partial/post/title', { post: post, index: true, class_name: 'unstyled' }) %></span>
       <%- partial('_partial/post/tag_archive', { post: post, class_name: 'meta' }) %>
     </li>
     <% }); %>
