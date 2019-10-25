@@ -44,7 +44,7 @@ When we tap on a button and then lift our fingers, we always hope that the actio
 
 The common feeling of "web apps are inferior to native apps in terms of user experience" can be partially ascribed to sticky hovers. On StackOverflow, there have also been [discussions](https://stackoverflow.com/questions/23885255/how-to-remove-ignore-hover-css-style-on-touch-devices) on how to disable this specific behavior.
 
-In fact, when W3C developed relevant web standards, it did not show any positive attitude of such interaction logic. The following is a definitive explanation of the CSS dynamic pseudo-classes in [the standard drawn by W3C](https://www.w3.org/TR/selectors-3/#sel-active):
+In fact, when W3C developed relevant web standards, it did not show any positive attitude of such interaction logic. The following is a definitive explanation of the CSS dynamic pseudo-classes in [the standard](https://www.w3.org/TR/selectors-3/#sel-active) drawn by W3C:
 
 > Interactive user agents sometimes change the rendering in response to user actions. Selectors provides three pseudo-classes for the selection of an element the user is acting on.
 >
