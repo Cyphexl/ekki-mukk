@@ -15,8 +15,19 @@ global-reset()
   background-color: $color-accent-3
   color: $color-background
 
-a
-  transition: color .2s
+a, a:link, a:hover, a:active, a:visited
+  color: inherit
+
+a.unstyled
+  text-decoration: none
+
+a:not(.unstyled)
+  underline(5px, $color-text)
+  display: inline-block
+  transition: transform .2s
+
+a:not(.unstyled):hover
+  transform: translateY(2px)
   
 html
   margin: 0
@@ -67,34 +78,6 @@ body
 
   code
     hyphens(manual)
-
-  a, a:link, a:hover, a:active, a:visited
-    color: inherit
-    text-decoration: none
-
-  a:hover
-    cursor: pointer
-
-  a:not(.unstyled)
-    underline(5px, $color-text)
-
-  h1 a, .h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
-    background: none
-    color: inherit
-    text-decoration: none
-
-  h1 a:hover, .h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover
-    underline(6px, $color-link)
-
-  h6
-    a
-      background: none
-      color: inherit
-      text-decoration: none
-
-  h6
-    a:hover
-      underline(6px, $color-link)
 
 @media (min-width: 540px)
   .image-wrap
@@ -152,7 +135,6 @@ pre
     padding: 0
     border: none
     
-
 code
   padding: 0 5px
   background: $color-background-code
@@ -175,7 +157,6 @@ figure
   border-radius: 4px
   background: $color-background-code
   font-family: $font-family-mono
-  // color: $color-accent-3
   -webkit-border-radius: 4px
 
   figcaption

@@ -7,7 +7,7 @@
         <strong>i@tzingtao.com.</strong><br />Datone Student Centre, Tianjin University (Peiyang Villa Campus), Yakwan
         Road No. 135<br />
         Haihe Educational Park, Jinnan District, Tianjin, PRC 300350. <br />
-        Find me on 
+        Find me on&nbsp;
         <% var nb_links = Object.keys(theme.social_links).length %>
         <% var i = 0 %>
         <% for(var link in theme.social_links) { %>
@@ -173,11 +173,11 @@
         display: inline-block;
         width: 230px;
         margin-bottom: 20px;
-        transition: all .2s
+        transition: all .2s;
     }
 
     .single-friend:hover {
-        animation: vibrate .5s linear infinite both
+        transform: translateY(2px);
     }
 
     .friend-website-name {
@@ -193,8 +193,9 @@
     a.social-link {
         display: inline-block;
         margin-right: 4px;
+        transition: all .2s
     }
     a.social-link:hover {
-        animation: vibrate .5s linear infinite both;
+        transform: translateY(2px);
     }
 </style>
