@@ -2,7 +2,7 @@
 title: When We Visualize City Names
 date: 2019-06-16 13:12:19
 tags: Tech
-math: trued
+math: true
 ---
 
 <div class="article-note">
