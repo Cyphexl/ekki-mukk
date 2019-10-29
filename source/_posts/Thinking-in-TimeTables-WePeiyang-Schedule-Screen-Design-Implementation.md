@@ -1,7 +1,7 @@
 ---
 title: 'Thinking in TimeTables: WePeiyang Schedule Screen Design & Implementation'
 date: 2019-08-29 15:56:25
-tags: Tech
+tags: [Tech, Design]
 math: true
 ---
 
