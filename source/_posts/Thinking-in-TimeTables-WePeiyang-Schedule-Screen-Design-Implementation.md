@@ -5,7 +5,7 @@ tags: [Tech, Design]
 math: true
 ---
 
-In my recently developing project, [WePeiyang 4.0 React-Native](https://github.com/Cyphexl/WePeiYang-RN), the Schedule module is a well-deserved, most knotty one for its elusive special cases and complicated layout implementation.
+In my recently developing project, [WePeiyang 4.0 React-Native](https://github.com/Cyphexl/WePeiYang-RN), the Schedule module is a well-deserved, most knotty one for its elusive cases and complicated layout implementation.
 
 To me, however, the hardest part is "how to advance a further step." WePeiyang itself has a 10 years history of development, signifying the weight of its accumulated relevant experiences. The previous major version of WePeiyang, 3.0, has also been through the test of time. It is fully functional and, most importantly, robust, not requiring an immediate upgrade itself. Since I have decided to break this status quo and initiate a new version, there must be a good reason.
 
