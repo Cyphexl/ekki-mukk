@@ -11,7 +11,7 @@ To me, however, the hardest part is "how to advance a further step." WePeiyang i
 
 <figure>
     {% asset_img wpy3.png %}
-    <figcaption>Figure. Schedule Module of WePeiyang 3.0</figcaption>
+    <figcaption>Figure 1. Schedule Module of WePeiyang 3.0</figcaption>
 </figure>
 
 
@@ -25,7 +25,7 @@ Although the development process didn't start until June 2019, the origin of WeP
 
 <figure>
     {% asset_img design-all.png %}
-    <figcaption>Figure. The conceptual design proposal from Owlling. Only a portion of all layouts required was implemented.</figcaption>
+    <figcaption>Figure 2. The conceptual design proposal from Owlling. Only a portion of all layouts required was implemented.</figcaption>
 </figure>
 
 
@@ -41,7 +41,7 @@ Dotmap is a component that tells users how their time is occupied. It is introdu
 
 <figure>
     {% asset_img dotmap2.png %}
-    <figcaption>Figure. The Dotmap abstracts the full schedule into a... well, dot map.</figcaption>
+    <figcaption>Figure 3. The Dotmap abstracts the full schedule into a... well, dot map.</figcaption>
 </figure>
 
 
@@ -78,7 +78,7 @@ Runtime screenshots:
 
 <figure>
     {% asset_img dotmap.png %}
-    <figcaption>Figure. The Dotmap that can handle even 15 days a week at ease.</figcaption>
+    <figcaption>Figure 4. The Dotmap that can handle even 15 days a week at ease.</figcaption>
 </figure>
 
 
@@ -129,7 +129,7 @@ In the actual implementation, some other details were included as well. For exam
 
 <figure>
     {% asset_img 5or7.png %}
-    <figcaption>Figure. The layout in which the displayed days each week is set to 7 and 5, respectively.</figcaption>
+    <figcaption>Figure 5. The layout in which the displayed days each week is set to 7 and 5, respectively.</figcaption>
 </figure>
 
 
@@ -159,7 +159,7 @@ The code written here is mostly conditional styles; we'll leave the code and won
 
 <figure>
     {% asset_img resp.png %}
-    <figcaption>Figure. The layout behavior in actual testing for different devices. Screenshots are taken from iOS Simulators.</figcaption>
+    <figcaption>Figure 6. The layout behavior in actual testing for different devices. Screenshots are taken from iOS Simulators.</figcaption>
 </figure>
 
 
@@ -172,7 +172,7 @@ Just like any other timetables, several arrangements in a single time slot can c
 
 <figure>
     {% asset_img conf-types.png %}
-    <figcaption>Figure. Common types of conflicts.</figcaption>
+    <figcaption>Figure 7. Common types of conflicts.</figcaption>
 </figure>
 
 We can classify the conflicts into the following three types/categories:
@@ -195,7 +195,7 @@ In the versions prior to WePeiyang 3.0, the idea, in general, is this: First, de
 
 <figure>
     {% asset_img conf1.png %}
-    <figcaption>Figure. Some conflict handling designs.</figcaption>
+    <figcaption>Figure 8. Some conflict handling designs.</figcaption>
 </figure>
 
 WePeiyang 3.0 decided to use Solution III, an algorithm only capable of solving one specific type of conflict and doesn't satisfy the 4.0 requirements anymore. Suppose there were two overlapping course arrangements, one from 8 to 10 and another from 9 to 11. Using solution III, only one of them would be rendered. Although you can see the conflict details via the popup modal, the time slot in the schedule view would **still appear to be vacant though there were actual events**. This behavior violates one basic rule in our UX design guidelines - "Not implementing is better than misleading."
@@ -206,7 +206,7 @@ At last, WePeiyang 4.0 adopted an overlay rendering solution (Solution I). One p
 
 <figure>
     {% asset_img conf3.png %}
-    <figcaption>Figure. How different categories of conflicts should be rendered for Solution I.</figcaption>
+    <figcaption>Figure 9. How different categories of conflicts should be rendered for Solution I.</figcaption>
 </figure>
 
 The first problem can be solved by giving the course blocks some translucency.
@@ -264,7 +264,7 @@ At this point, we can appropriately render all four conflict types mentioned ear
 
 <figure>
     {% asset_img conf4.png %}
-    <figcaption>Figure. Testing a course table replete with different types of conflicts.</figcaption>
+    <figcaption>Figure 10. Testing a course table replete with different types of conflicts.</figcaption>
 </figure>
 
 
@@ -281,7 +281,7 @@ The problem gets knotty when we consider overlapping conflicts. What if courses 
 
 <figure>
     {% asset_img not-this-week.png %}
-    <figcaption>Figure. The problem regarding not-this-week courses.</figcaption>
+    <figcaption>Figure 11. The problem regarding not-this-week courses.</figcaption>
 </figure>
 
 That's right. *Not-this-week courses can conflict with themselves, too.* When this happens, it makes no sense to display only one of them. It's not even a problem of anti-elegance. It's misleading.
@@ -298,7 +298,7 @@ This reuse solves the problem at a relatively low cost. No more misleading vacan
 
 <figure>
     {% asset_img not-this-week-2.png %}
-    <figcaption>Figure. The solution for displaying not-this-week courses.</figcaption>
+    <figcaption>Figur 12. The solution for displaying not-this-week courses.</figcaption>
 </figure>
 
 
@@ -430,8 +430,12 @@ The above code stores the generated schedule details in the Redux Store, and the
 Meanwhile, the `getFullSchedule()` is invoked as well when users attempt to refresh the data from remote servers to ensure data integrity and consistency. This costly action can be safely omitted here because the network request is usually more time-consuming than local computation.
 
 
-
 ## Afterwords
+
+<figure>
+    {% asset_img screenshots.jpg %}
+    <figcaption>Figure 13. WePeiyang 4.0 runtime screenshots.</figcaption>
+</figure>
 
 When developing user interfaces, some observations from life, motivation to solve real-world problems, and an adequate understanding of how human behaviors work, can weigh more than an ultimately optimized algorithm.
 
