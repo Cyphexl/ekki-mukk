@@ -1,7 +1,7 @@
 ---
 title: 'Rendering Math Equations in Hexo'
 date: 2019-06-21 12:14:43
-tags: [Math, Tech]
+tags: [Dev]
 math: true
 ---
 

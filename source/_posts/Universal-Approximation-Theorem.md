@@ -1,7 +1,7 @@
 ---
 title: Universal Approximation Theorem
 date: 2018-03-11 23:15:02
-tags: Tech
+tags: Math
 math: true
 ---
 

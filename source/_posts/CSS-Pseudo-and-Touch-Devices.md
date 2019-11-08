@@ -2,7 +2,7 @@
 layout: css
 title: CSS Sticky Hover and Pseudo States
 date: 2018-05-30 22:56:27
-tags: Tech
+tags: [HCI]
 ---
 
 ## BACKGROUND

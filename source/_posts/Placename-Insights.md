@@ -1,12 +1,12 @@
 ---
 title: When We Visualize City Names
 date: 2019-06-16 13:12:19
-tags: Tech
+tags: [Vis]
 math: true
 ---
 
 <div class="article-note">
-Note: this article is an excerpt from the final report of [Project Placename Insights](https://github.com/Cyphexl/placename-insights), a cooperative coursework study on typonymy. Below is a conclusive analysis of the visualization section.
+Note: this article is an excerpt from the final report of [Project Placename Insights](https://github.com/Cyphexl/placename-insights), a study on typonymy. Below is a conclusive analysis of the visualization section.
 </div>
 
 

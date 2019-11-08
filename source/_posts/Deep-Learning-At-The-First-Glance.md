@@ -1,7 +1,7 @@
 ---
 title: 'Deep Learning: At The First Glance'
 date: 2018-02-25 14:37:02
-tags: [Tech, Life]
+tags: [Life]
 ---
 
 这个计划和一篇论文、一段视频有关。

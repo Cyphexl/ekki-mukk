@@ -1,7 +1,7 @@
 ---
 title: I Fear Those Who Read
 date: 2015-03-08 16:22:06
-tags: [Literature, Offprints]
+tags: [Literature]
 ---
 
 <figure>

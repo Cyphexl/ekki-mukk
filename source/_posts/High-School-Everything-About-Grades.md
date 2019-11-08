@@ -1,7 +1,7 @@
 ---
 title: 'Everything About Grades'
 date: 2016-06-23 06:25:20
-tags: [Life, Tech]
+tags: [Life, Vis]
 ---
 
 高二上学期，第二次月考之前的一个周末。我按照计划，去海光寺旁的家乐福超市采购生活用品。

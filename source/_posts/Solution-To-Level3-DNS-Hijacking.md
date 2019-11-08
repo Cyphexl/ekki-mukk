@@ -1,7 +1,7 @@
 ---
 title: Solution to Level3 DNS Hijacking on VPN Servers
 date: 2018-01-07 19:47:54
-tags: Tech
+tags: [OS]
 ---
 
 ## BACKGROUND
