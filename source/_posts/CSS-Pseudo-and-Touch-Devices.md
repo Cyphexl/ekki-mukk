@@ -70,11 +70,9 @@ Let's use the button introduced earlier in the article. Suppose it has three sta
 button {
   opacity: 1;
 }
-
 button:hover {
   opacity: 0.9;
 }
-
 button:active {
   transform: scale(1.1);
 }
