@@ -14,7 +14,7 @@ Ekki Múkk means "No Sound" in Icelandic. Please note that this website is not i
 
 Download and install [Pandoc](https://pandoc.org/installing.html), then execute the following command:
 
-```
+```bash
 npm install hexo-cli -g
 npm i
 hexo server # development
