@@ -1,38 +1,29 @@
 <div id="elsewhere">
 
     <h1 class="hugo-h3">
-        Connect Me
-    </h1>
-    <p>
-        <strong>i@tzingtao.com.</strong><br />
-        Zhengyuan 9, 135 Yaguan Rd, Tianjin, China.<br />
-        IF 3.22, 10 Crichton St, Edinburgh, Scotland, UK.<br />
-        Find me on&nbsp;
+        Find me on <br />
         <% var nb_links = Object.keys(theme.social_links).length %>
         <% var i = 0 %>
         <% for(var link in theme.social_links) { %>
         <% if (link == 'mail') { %>
         <a class="social-link unstyled icon" target="_blank" href="<%- url_for(theme.social_links[link]) %>">
             <i class="fas fa-envelope"></i>
-            <!--
-        ---></a>
-        <!--
-        ---><% } else { %>
+        </a>
+        <% } else { %>
         <a class="social-link unstyled icon" target="_blank" href="<%- url_for(theme.social_links[link]) %>">
             <i class="fab fa-<%= link %>"></i>
-            <!--
-        ---></a>
-        <!--
-      ---><% } %>
-        <!--
-      ---><%= ( nb_links > 0 && i < nb_links-1 ?
-              ( __('index.enum_slash')+' ' )
-              : '.' ) %>
-        <% i+=1 %>
+        </a>
         <% } %>
-    </p>
+        <%= ( nb_links > 0 && i < nb_links-1 ? ', ' : '.' ) %>
+        <% i+=1 %>
+        <% } %><br />-<br />
+        Talk to me by email <a href="mailto:i@tzingtao.com">i@tzingtao.com</a>.<br />-<br />
+        Meet me in person, using my physical address <a href="http://g.co/earth">Earth</a>.<br />
+    </h1>
+    <br />
 
-    <h1 class="hugo-h3">
+
+    <!-- <h1 class="hugo-h3">
         Friends
     </h1>
     <p>
@@ -105,7 +96,7 @@
             </div>
         </a>
 
-    </div>
+    </div> -->
 
 </div>
 
@@ -139,7 +130,8 @@
     a.social-link {
         display: inline-block;
         margin-right: 4px;
-        transition: all .2s
+        transition: all .2s;
+        font-weight: normal;
     }
 
     a.social-link:hover {
