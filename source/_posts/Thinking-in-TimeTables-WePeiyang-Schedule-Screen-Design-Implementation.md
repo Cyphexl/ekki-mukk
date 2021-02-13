@@ -103,10 +103,11 @@ To achieve a responsive layout, we need to make the layout parameters flexible o
 - In cases that the size still can't be adequately auto-determined, allow users to specify a value to adjust it explicitly.
 
 Design the following algorithm:
-$$
-h_{r}=(h_{m}+\dfrac {h_{s}p}{18-n})N
-$$
-Where $h_{r}$ represents the overall rendered height, $h_{s}$ is the current window height returned from `Dimensions.get()`, $p$ represents the scale coefficient designated by users, $h_{m}$ stands for the margin heights, and $n$ stands for the displayed days each week. $N$ is the number of course slots each day, which identically equals to 12.
+{% katex %}
+\displaystyle h_{r}=(h_{m}+\dfrac {h_{s}p}{18-n})N
+{% endkatex %}
+
+Where {% katex %}h_{r}{% endkatex %} represents the overall rendered height, {% katex %}h_{s}{% endkatex %} is the current window height returned from `Dimensions.get()`, {% katex %}p{% endkatex %} represents the scale coefficient designated by users, {% katex %}h_{m}{% endkatex %} stands for the margin heights, and {% katex %}n{% endkatex %} stands for the displayed days each week. {% katex %}N{% endkatex %} is the number of course slots each day, which identically equals to 12.
 
 ```jsx
 // For height, you need to specify height of a single component,
@@ -258,7 +259,7 @@ day.courses
   })
 ```
 
-In the above code snippet, `crashIndex` keeps track of the current accumulated courses with the same start time. For the $n$th of such a course, the render position will be translated by $20n$ pixels. Once a new course with a different start time is detected, `crashIndex` is reset to zero.
+In the above code snippet, `crashIndex` keeps track of the current accumulated courses with the same start time. For the {% katex %}n{% endkatex %}th of such a course, the render position will be translated by {% katex %}20n{% endkatex %} pixels. Once a new course with a different start time is detected, `crashIndex` is reset to zero.
 
 At this point, we can appropriately render all four conflict types mentioned earlier. We ensured that all courses are visible, clickable, and the more critical courses appear more salient.
 
@@ -290,7 +291,7 @@ Similarly, while the current WePeiyang suffers from this issue, they are not wid
 
 Before we came up with the conflict handling model, the only way to solve it is like this:
 
-> Calculate the time slots $L$ that are vacant every week. Its complement $\overline{L}$ then represents the time slots that have at least one not-this-week course occupied. When rendering regular courses, render all those $\overline{L}$ time slots in the layer beneath, tag them as "Possible not-this-week courses are located here." As for which time slot corresponds with what specific course, logically, we can't decide, because the overlapping conflicts are making these vacant time slots amorphous.
+> Calculate the time slots {% katex %}L{% endkatex %} that are vacant every week. Its complement {% katex %}\overline{L}{% endkatex %} then represents the time slots that have at least one not-this-week course occupied. When rendering regular courses, render all those {% katex %}\overline{L}{% endkatex %} time slots in the layer beneath, tag them as "Possible not-this-week courses are located here." As for which time slot corresponds with what specific course, logically, we can't decide, because the overlapping conflicts are making these vacant time slots amorphous.
 
 This solution, though theoretically feasible, brings a tremendous amount of code and rendering logic that is more difficult for future generations to maintain. We are almost about to give up rendering not-this-week courses altogether. After designing the conflict rendering scheme for the regular courses, we realized that this scheme could also be applied to not-this-week courses. The difference is that there is no need to handle positional offsets for them because they are inherently unclickable by design.
 

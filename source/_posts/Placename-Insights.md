@@ -2,11 +2,12 @@
 title: When We Visualize City Names
 date: 2019-06-16 13:12:19
 tags: [Vis]
-math: true
 ---
 
 <div class="article-note">
+
 Note: this article is an excerpt from the final report of [Project Placename Insights](https://github.com/Cyphexl/placename-insights), a study on typonymy. Below is a conclusive analysis of the visualization section.
+
 </div>
 
 
@@ -69,9 +70,9 @@ To design a proper `words_length -> color` projection function, we firstly inves
 
 Above is its PDF (Probability Density Function) plotted. To transform the distribution into a color projection function, we need its CDF (Cumulative Distribution Function) expressions:
 
-$$
-CDF(x, \mu, \sigma) = \frac12 + \frac12\operatorname{erf}\Big[\frac{\ln x-\mu}{\sqrt{2}\sigma}\Big]
-$$
+{% katex %}
+\displaystyle CDF(x, \mu, \sigma) = \frac12 + \frac12\operatorname{erf}\Big[\frac{\ln x-\mu}{\sqrt{2}\sigma}\Big]
+{% endkatex %}
 
 The corresponding part of the code is implemented as below:
 

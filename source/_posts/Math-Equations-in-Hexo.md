@@ -157,11 +157,11 @@ math: true
 
 我选择了 KaTeX，因为我更相信年轻的事物。
 
-现在，清理缓存，重新编译部署，会发现 $\LaTeX$ 公式已经可以按照自己想要的效果渲染。
+现在，清理缓存，重新编译部署，会发现 {% katex %}\LaTeX{% endkatex %} 公式已经可以按照自己想要的效果渲染。
 
-$$
+{% katex %}
 \displaystyle {1 +  \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots }= \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \quad\quad \text{for }\lvert q\rvert<1.
-$$
+{% endkatex %}
 
 就是这样。
 
