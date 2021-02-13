@@ -2,7 +2,6 @@
 title: 'Rendering Math Equations in Hexo'
 date: 2019-06-21 12:14:43
 tags: [Dev]
-math: true
 ---
 
 在经历了庞大而笨重的 WordPress 框架一年半的折磨之后，我终于决定转向 Hexo。我希望新站点能够轻量一些，但同时满足一些技术文章写作的基本要求，其中之一就是数学公式渲染。

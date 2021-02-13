@@ -2,7 +2,6 @@
 title: Universal Approximation Theorem
 date: 2018-03-11 23:15:02
 tags: Math
-math: true
 ---
 
 在人工神经网络领域的数学观点中，「**通用近似定理** (Universal approximation theorem，一译万能逼近定理)」指的是：如果一个前馈神经网络具有线性输出层和至少一层隐藏层，只要给予网络足够数量的神经元，便可以实现以足够高精度来逼近任意一个在 {% katex %}\mathbb{R}^n{% endkatex %} 的紧子集 (Compact subset) 上的连续函数。
