@@ -21,9 +21,9 @@ nav:
 # only 'mail' is an exception.
 social_links:
   github: https://github.com/cyphexl/
-  linkedin: https://www.linkedin.com/in/tzingtaochow/
   instagram: https://www.instagram.com/cyphexl/
   behance: https://www.behance.net/tzingtaochow/
+  zhihu: https://www.zhihu.com/people/zhou-jing-tao-83
 
 # Customize the overview with displaying a tagcloud on the index page.
 # Options: https://hexo.io/docs/helpers.html#tagcloud
