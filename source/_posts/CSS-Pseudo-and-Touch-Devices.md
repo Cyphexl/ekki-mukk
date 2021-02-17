@@ -44,7 +44,7 @@ When we tap on a button and then lift our fingers, we always hope that the actio
 
 The common feeling of "web apps are inferior to native apps in terms of user experience" can be partially ascribed to sticky hovers. On StackOverflow, there have also been [discussions](https://stackoverflow.com/questions/23885255/how-to-remove-ignore-hover-css-style-on-touch-devices) on how to disable this specific behavior.
 
-In fact, when W3C developed relevant web standards, it did not show any positive attitude of such interaction logic. The following is a definitive explanation of the CSS dynamic pseudo-classes in [the standard](https://www.w3.org/TR/selectors-3/#sel-active) drawn by W3C:
+In fact, when W3C developed the relevant web standards, it did not show any positive attitude towards such an interaction logic. The following is a definitive explanation of the CSS dynamic pseudo-classes in [the standard](https://www.w3.org/TR/selectors-3/#sel-active) drawn by W3C:
 
 > Interactive user agents sometimes change the rendering in response to user actions. Selectors provides three pseudo-classes for the selection of an element the user is acting on.
 >
@@ -164,11 +164,11 @@ Though this pattern has seen a decline in usage, some UX designers have been wor
     <figcaption>Figure 5. The "improved" hovering activated menu pattern used on JD.com.</figcaption>
 </figure>
 
-Despite all the efforts, no solution for this pattern could be both simple, elegant, and precise. No matter how complex and sophisticated the prediction algorithm is designed, misjudgment can happen.
+Despite all the efforts, no solution for this pattern could be both simple, elegant, and precise. No matter how complex and sophisticated the prediction algorithm is designed, misjudgments can happen.
 
 The best use of `:hover` pseudo-states, from a modern web design view that fits both desktop and touch devices, should only be the *style* transition that provides proper visual feedback instead of doing anything *functional* imperative. Relying on hovering to trigger a menu itself probably would not be a good idea.
 
-Other functions that rely on hovering states, e.g., tooltips, are preserved and can be appropriately activated. A long press would do the work. But notice that tooltips are not ideal interactive components on mobile devices as well.
+Other functions that rely on the hovering states, e.g., tooltips, are preserved and can be appropriately activated. A long press would do the work. But notice that tooltip is not the ideal interactive component on mobile devices as well.
 
 
 
@@ -177,6 +177,8 @@ Other functions that rely on hovering states, e.g., tooltips, are preserved and 
 In web development, The historical burden that a browser carries is often onerous. Bad or incorrect designs in legacy HTML, CSS, and JavaScript standards must be preserved to make sure old sites function properly. `border-box` in CSS and `typeof null` in JavaScript are all good examples for that. We should, therefore, understand the compromises that they had to make.
 
 The developers, on the other hand, should actively seek new possibilities that may provide better solutions. It's important for us to realize that we don't have to always "keep in sync" with the browser specifications. 
+
+Let's end this article with a pretentious quote.
 
 > It's like we've forgotten who we are, Donald. <br />Explorers. Pioneers. Not caretakers.
 
