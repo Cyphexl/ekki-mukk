@@ -85,6 +85,9 @@
             imgurl: 'nankai.jpg'
         }
     ]
+
+    const toPng = url => url.split('.').slice(0,-1).join('.') + '.png'
+
 %>
 
 <p class="page-note inverta" hidden>
@@ -98,9 +101,13 @@
 
 <div id='portfolio' class="dw">
     <% portfolioData.forEach((artwork) => { %>
-    <a href="<%= artwork.link %>" class='single-block dw-panel'>
+    <a href="<%= artwork.link %>" class='single-block dw-panel unstyled'>
         <div class='single-block-fence'>
-            <img class="single-block-image dw-panel__content" src="index/<%= artwork.imgurl %>">
+            <img class="single-block-image dw-panel__content img-deferred" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="index/<%= artwork.imgurl %>">
+            <div class="single-block-loading">
+                <img src="index/loading.svg">
+            </div>
+            <img class="single-block-image-placeholder dw-panel__content" src="index/placeholders/<%= toPng(artwork.imgurl) %>">
             <div class="single-block-content">
                 <span class='artwork-title hugo-degrec'>
                     <%= artwork.title %>
@@ -145,16 +152,41 @@
     }
 
     .single-block-fence {
-        transform: rotateY(-180deg);
-        transform-style: preserve-3d;
+        /* transform: rotateY(-180deg);
+        transform-style: preserve-3d; */
         filter: grayscale(1);
-        transition: all 12s ease-in;
+        transition: all 2s ease-in;
+        width: 100%;
     }
 
     .single-block:hover .single-block-fence {
-        transform: rotateY(0deg);
+        /* transform: rotateY(0deg); */
         filter: grayscale(0);
-        transition: all .7s;
+        transition: all .1s;
+    }
+
+    .single-block-loading {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: -2;
+        font-size: 100px;
+    }
+
+    .single-block-image {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        transition: all 1s;
+    }
+
+    .single-block-image-placeholder {
+        position: relative;
+        z-index: -3;
     }
 
     .title-container {
@@ -175,5 +207,18 @@
     }
 </style>
 
-
 <%- css('lib/bricks/driveway.css') %>
+
+<script>
+function init() {
+    let imgDefer = document.querySelectorAll('.img-deferred');
+    for (let i = 0; i < imgDefer.length; i++) {
+        if (imgDefer[i].getAttribute('data-src')) {
+            imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+            imgDefer[i].addEventListener('load', () => imgDefer[i].style.opacity = '1');
+        }
+    }
+}
+
+window.onload = init
+</script>
