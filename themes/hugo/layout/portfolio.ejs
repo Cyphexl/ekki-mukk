@@ -210,15 +210,19 @@
 <%- css('lib/bricks/driveway.css') %>
 
 <script>
-function init() {
-    let imgDefer = document.querySelectorAll('.img-deferred');
-    for (let i = 0; i < imgDefer.length; i++) {
-        if (imgDefer[i].getAttribute('data-src')) {
-            imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
-            imgDefer[i].addEventListener('load', () => imgDefer[i].style.opacity = '1');
-        }
-    }
-}
 
-window.onload = init
+function loadRealPortfolioImgs() {
+    let imgDefer = document.querySelectorAll('.img-deferred');
+    imgDefer.forEach(img => {
+        if (img.getAttribute('data-src')) {
+            img.setAttribute('src',img.getAttribute('data-src'));
+            img.addEventListener('load', () => {
+                img.style.opacity = '1'
+                img.parentElement.querySelector('.single-block-loading').style.display = 'none';
+            });     
+        }
+    })
+}
+window.onload = loadRealPortfolioImgs
+
 </script>
