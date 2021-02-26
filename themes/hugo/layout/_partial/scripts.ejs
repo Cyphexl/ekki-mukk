@@ -5,6 +5,9 @@
 <%- css_deferred('lib/overlayscrollbars/theme.css') %>
 <%- js('lib/overlayscrollbars/osb.min.js') %>
 <%- js('js/scrollbar') %>
+<!-- gsap (for cursor) -->
+<%- js('lib/gsap/gsap.min.js') %>
+<%- js('js/activate-custom-cursor') %>
 <!-- search -->
 <% if (config.search && (page.search || page.type === "search")){ %>
   <%- js('js/search.js') %>

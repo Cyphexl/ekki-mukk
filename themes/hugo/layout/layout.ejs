@@ -4,6 +4,7 @@
 <%- partial('_partial/head') %>
 <%- partial('_partial/scripts_pre') %>
 <body onload="document.body.style.opacity='1'" id="body" class="max-width mx-auto px3 <%- theme.direction -%>">
+    <%- partial('_partial/cursor') %>
     <% if (is_post()) { %>
       <%- partial('_partial/post/actions_desktop') %>
     <% } %>
